@@ -1,0 +1,48 @@
+<template name="feed">
+  <div class="feed">
+    <div class="content">
+      <!-- blaze templates, equals and currentPage defined in js/helpers.js-->
+      {{#if equals currentPage "feed"}}
+      <div class="homeGallery">
+        <img src="https://s3.amazonaws.com/files.enjin.com/431279/boss_kills/Star%20Augur%20Mythic.jpg" />
+        <div class="thumbs">
+          <div class="cover"></div>
+          <img src="https://s3.amazonaws.com/files.enjin.com/431279/boss_kills/Star%20Augur%20Mythic.jpg" />
+          <div class="cover"></div>
+          <img src="https://s3.amazonaws.com/files.enjin.com/431279/boss_kills/Hight%20Botanist%20Mythic.jpg" />
+          <div class="cover"></div>
+          <img src="https://s3.amazonaws.com/files.enjin.com/431279/boss_kills/Ticondrius%20Mythic.jpg" />
+          <div class="cover"></div>
+          <img src="https://s3.amazonaws.com/files.enjin.com/431279/boss_kills/Spellblade%20Mythic.jpg" />
+          <div class="cover"></div>
+          <img src="https://s3.amazonaws.com/files.enjin.com/431279/boss_kills/Krosus%20Mythic.jpg" />
+          <div class="cover"></div>
+          <img src="https://s3.amazonaws.com/files.enjin.com/431279/boss_kills/Trilliax%20Mythic.jpg" />
+          <div class="cover"></div>
+          <img src="https://s3.amazonaws.com/files.enjin.com/431279/boss_kills/Chronomatic%20Anomaly%20Mythic.jpg" />
+        </div>
+      </div>
+      {{> news}}
+      {{/if}}
+      <!-- if the page is news, load this instead -->
+      {{#if equals currentPage "news"}}
+      {{>newsHeader}}
+      {{>news}}
+      {{/if}}
+      {{#if equals currentPage "article"}}
+      {{>newsHeader}}
+      {{>article}}
+      {{/if}}
+      {{#if equals currentPage "about"}}
+      {{>about}}
+      {{/if}}
+    </div>
+    <div class="widgets">
+      {{>recruiting}}
+    </div>
+  </div>
+  {{>footer}}
+  <div class="photoCredit">
+    Photo credit: <a href="https://www.flickr.com/photos/narcissism/3218689577/">Existential Crisis Factory</a> via <a href="https://visualhunt.com/re/0b6ace">VisualHunt.com</a> / <a href="http://creativecommons.org/licenses/by-nc-sa/2.0/"> CC BY-NC-SA</a>
+  </div>
+</template>

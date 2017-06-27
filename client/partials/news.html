@@ -1,0 +1,17 @@
+<template name="news">
+  <!-- since news is used in two places, creating a template is DRY-->
+  <div class="news">
+    {{#each posts}}
+    <div class="articleFeed" onclick="currentPage.set('article'); currentPost.set('{{_id}}')">
+      <img src="{{imgPath}}" />
+      <div class="articleDim"></div>
+      <div class="title">
+        {{title}}
+      </div>
+      <div class="date">
+        {{date}}
+      </div>
+    </div>
+    {{/each}}
+  </div>
+</template>
