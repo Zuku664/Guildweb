@@ -3,9 +3,9 @@
   <div class="adminLeft">
     <div class="fa fa-tachometer" title="dashboard"></div>
     <div class="fa fa-pencil" title="New Post"></div>
+    <div class="fa fa-trophy" title="Raids"></div>
     <div class="fa fa-file" title="Check Applications"></div>
     <div class="fa fa-cog" title="Site Settings"></div>
-    <div class="fa fa-trophy" title="Raids"></div>
   </div>
   <div class="adminRight">
     <div class="title">
@@ -21,28 +21,54 @@
       {{#if equals adminLoc "newPost"}}
       Create Post
       {{/if}}
-      {{#if equals adminLoc "applications"}}
+      {{#if equals adminLoc "apps"}}
       Applications
+      <button class="createNew" onclick="adminLoc.set('appSet')">
+        Questions
+      </button>
+      {{/if}}
+      {{#if equals adminLoc "appSet"}}
+      Application Settings
       {{/if}}
       {{#if equals adminLoc "settings"}}
       Settings
       {{/if}}
+      {{#if equals adminLoc "raids"}}
+      Raids
+      <button class="createNew" onclick="adminLoc.set('newRaid')">
+        Add Raid
+      </button>
+      {{/if}}
+      {{#if equals adminLoc "newRaid"}}
+      Add Raid
+      {{/if}}
     </div>
     {{#if equals adminLoc "dash"}}
+    {{#each amount}}
     <!-- the posts -->
     <div class="dashShort" style="background:#f24232" onclick="adminLoc.set('post')">
       <div id="center">
-        0
+        {{postCount}}
       </div>
       <div id="center" class="loc">Posts</div>
       <div id="bottom" style="background:#d93c2e">
         See More
       </div>
     </div>
-    <!-- the applications -->
-    <div class="dashShort" style="background:#00a857" onclick="adminLoc.set('applications')">
+    <!-- the raids -->
+    <div class="dashShort" style="background:#ff9800" onclick="adminLoc.set('raids')">
       <div id="center">
-        0
+        {{raidCount}}
+      </div>
+      <div id="center" class="loc">Raids</div>
+      <div id="bottom" style="background:#e98900">
+        See More
+      </div>
+    </div>
+    <!-- the applications -->
+    <div class="dashShort" style="background:#00a857" onclick="adminLoc.set('apps')">
+      <div id="center">
+        {{appCount}}
       </div>
       <div id="center" class="loc">Applications</div>
       <div id="bottom" style="background:#00974e">
@@ -56,8 +82,9 @@
         See More
       </div>
     </div>
+    {{/each}}
     {{/if}}
-    <!-- the posts -->
+    <!-- the pages -->
     {{#if equals adminLoc "post"}}
     {{>loadPost}}
     {{/if}}
@@ -66,6 +93,18 @@
     {{/if}}
     {{#if equals adminLoc "settings"}}
     {{>settings}}
+    {{/if}}
+    {{#if equals adminLoc "raids"}}
+    {{>loadRaid}}
+    {{/if}}
+    {{#if equals adminLoc "newRaid"}}
+    {{>newRaid}}
+    {{/if}}
+    {{#if equals adminLoc "apps"}}
+    {{>loadApps}}
+    {{/if}}
+    {{#if equals adminLoc "appSet"}}
+    {{>appSet}}
     {{/if}}
   </div>
 </template>
@@ -181,25 +220,29 @@
 <!-- post releated -->
 <template name="loadPost">
   <div class="postCon">
-    <div id="actionBar">
+    <div class="actionBar">
       <div class="title">Title</div><div class="cataSux">Catagory</div><div class="date">Date</div><div class="act">Actions</div>
     </div>
+    {{#each post}}
     <div class="postObj">
       <div class="title">
-        {{title}} Welcome to your new website! Create a post to delete me :)
+        {{title}}
       </div>
       <div class="cataSux">
-        News
+        {{cataSux}}
       </div>
       <div class="date">
-        Jun 21 17
+        {{date}}
       </div>
       <div class="act">
         <span class="fa fa-trash"></span><span class="fa fa-pencil"></span>
       </div>
     </div>
+    {{/each}}
   </div>
 </template>
+
+<!-- new post -->
 <template name="newPost">
   <div class="postCon" style="border-top:5px solid #243136; padding-top:10px; padding-bottom:10px;">
     <span class="label">Title</span>
@@ -217,6 +260,88 @@
   </div>
 </template>
 
+<!-- applications -->
+<template name="loadApps">
+  <div class="postCon">
+    <div class="actionBar">
+      <div class="title">Username</div><div class="diff"></div><div class="act">Actions</div>
+    </div>
+    {{#each app}}
+    <div class="postObj">
+      <div class="title">
+        {{username}}
+      </div>
+      <div class="diff">
+      </div>
+      <div class="act">
+        <span class="fa fa-trash"></span><span class="fa fa-pencil"></span>
+      </div>
+    </div>
+    {{/each}}
+  </div>
+</template>
+
+<template name="appSet">
+  <div class="postCon" style="border-top:5px solid #243136; padding-top:10px; padding-bottom:10px;">
+    <span class="label">Add Questions</span>
+    <div id="quessCon">
+      <div class="questions" id="quesCon0">
+        <input class="quesName" placeholder="Question" id="qu0"/>
+      </div>
+    </div>
+    <button onclick="Meteor.addQues.addQues()" style="margin-top:0; display:inline">Add New Question</button>
+    <button onclick="Meteor.addQues.remQues()" class="remBoss" style="margin-top:0; float:right">Remove Question</button>
+    <button id="addApp" onclick="Meteor.addQues.postQues()">Change Application</button>
+  </div>
+</template>
+<!-- raids -->
+
+<template name="loadRaid">
+  <div class="postCon">
+    <div class="actionBar">
+      <div class="title">Title</div><div class="diff"></div><div class="act">Actions</div>
+    </div>
+    {{#each raid}}
+    <div class="postObj">
+      <div class="title">
+        {{title}}
+      </div>
+      <div class="diff">
+      </div>
+      <div class="act">
+        <span class="fa fa-trash"></span><span class="fa fa-pencil"></span>
+      </div>
+    </div>
+    {{/each}}
+  </div>
+</template>
+
+<template name="newRaid">
+  <div class="postCon" style="border-top:5px solid #243136; padding-top:10px; padding-bottom:10px;">
+    <span class="label">Title</span>
+    <input class="postTitle" placeholder="title" id="title"/>
+    <input class="bcMain" placeholder="Normal size"/><input class="bcHero" placeholder="Heroic size"/><input class="bcMyth" placeholder="Mythic size"/>
+    <span class="label">Add Bosses</span><span class="bossLabel">Dead</span>
+    <div id="bossCon">
+      <div class="bosses" id="bossCon0">
+        <input class="bossName" placeholder="Boss Name" id="abn0"/>
+        <table>
+          <th>&nbsp;N&nbsp;&nbsp;&nbsp;H&nbsp;&nbsp;&nbsp;M</th>
+          <tr>
+            <td>
+              <input type="checkbox" id="absN0"/>
+              <input type="checkbox" id="absH0"/>
+              <input type="checkbox" id="absM0"/>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <button onclick="Meteor.addBoss.addBoss()" style="margin-top:0; display:inline">Add New Boss</button>
+    <button onclick="Meteor.addBoss.remBoss()" class="remBoss" style="margin-top:0; float:right">Remove Boss</button>
+    <button id="raid" onclick="Meteor.addBoss.postBoss()">Post</button>
+  </div>
+</template>
 <!-- seperated so that I can use it on the actual site if an admin is logged in -->
 <template name="adminHeader">
   <div class="adminHeader">

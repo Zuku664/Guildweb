@@ -1,0 +1,24 @@
+<template name="applyPage">
+  <div class="apply">
+    {{#if equals currentPage "apply"}}
+    {{#each question}}
+    <div class="quesCon">
+    <script>
+    var ques = "{{ques}}"
+    ques = ques.split('::,')
+    console.log(ques)
+
+    var amt = Number('{{quesCount}}')
+    amt += 1
+    console.log(amt)
+    for(var i = 0; i < amt; i++){
+      ques[i] = ques[i].replace("::", "")
+      $('.quesCon').append('<div class="quesTitle" id="'+ques[i]+'">'+ques[i]+'</div>')
+      $('.quesCon').append('<input class="quesResp" placeholder="Response" id="'+ques[i]+'">')
+    }
+    </script>
+  </div>
+  {{/each}}
+  {{/if}}
+</div>
+</template>

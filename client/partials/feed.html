@@ -36,9 +36,13 @@
       {{#if equals currentPage "about"}}
       {{>about}}
       {{/if}}
+      {{#if equals currentPage "apply"}}
+      {{>applyPage}}
+      {{/if}}
     </div>
     <div class="widgets">
       {{>recruiting}}
+      {{>raidStatus}}
     </div>
   </div>
   {{>footer}}

@@ -83,6 +83,28 @@ body{
   .feed{
     margin-bottom:10;
   }
+  .apply{
+    .quesTitle{
+      color:#dddddd;
+      padding:10px;
+      padding-bottom:5px;
+      font-family: $font-ops;
+    }
+    .quesResp{
+      width:calc(100% - 40px);
+      margin-left:10px;
+      height:10px;
+      margin-bottom:5px;
+      outline: none;
+      border:none;
+      padding:10px;
+      font-family: $font-ops;
+      background: #1e1e1e;
+      border:1px solid #222222;
+      color:#dddddd;
+      @include border-radius(2px);
+    }
+  }
   .nav{
     border:1px solid #222222;
     width:calc(100% - 2px);
@@ -245,6 +267,91 @@ body{
         width:21px;
         height:21px;
       }
+    }
+  }
+  .raidStatus{
+    border:1px solid #222222;
+    margin-top:10px;
+    background: #111;
+    width:calc(100% - 12px);
+    padding-bottom:5px;
+    margin-bottom:10px;
+    margin-top:10px;
+    font-family: $font-ops;
+    .raidStatusCon{
+      position: relative;
+      .raidToolTip{
+        display:none;
+        position:fixed;
+        overflow:hidden;
+        //width:450px;
+        z-index: 3;
+        box-shadow: 4px 4px 15px #000;
+        background:rgba(23, 23, 23, 0.91);
+        table{
+          padding:2px;
+        }
+        .title, .bn{
+          //width: 210px;
+          font-size: 13px;
+          padding:10px;
+        }
+        .size, .bS{
+          width:70px;
+          font-size: 11px;
+          padding: 10px;
+        }
+        .bn, .bS{
+          padding-top:0;
+          font-size: 10px;
+          padding-bottom: 2px;
+        }
+        .bS{
+          color: #00de00
+        }
+        .dead{
+          color:red;
+        }
+        .title, .size{
+          padding-bottom: 5px;
+        }
+      }
+    }
+    .raidStatusCon:hover{
+      .raidToolTip{
+        display: block;
+      }
+    }
+    .title{
+      padding: 10px;
+      color:white;
+      text-transform: uppercase;
+      text-align: left;
+    }
+    .percentCon{
+      margin:10px;
+      margin-top:0;
+      height:20px;
+      width:calc(100% - 20px);
+      border:1px solid #222222;
+      position: relative;
+      @include border-radius(3px);
+      overflow: hidden;
+    }
+    .percentText{
+      text-align: center;
+      color:white;
+      line-height: 20px;
+      position: absolute;
+      width: 100%;
+      top:0;
+      font-size: 13px;
+      text-transform: uppercase;
+    }
+    .percentMask{
+      width:40%;
+      height:100%;
+      background-color: #983e0b;
     }
   }
   .newsHeader{
@@ -435,16 +542,15 @@ body{
       background: white;
       margin-top:20px;
       @include border-radius(3px);
-      #actionBar{
+      .actionBar{
         width: 100%;
         display: inline-block;
-        border-bottom:2px solid #d1d6df;
+        border-bottom:1px solid #d1d6df;
         div{
           float:left;
           padding:8px 10px 8px 10px;
           font-family: $font-ops;
           color:#4c4d4d;
-          font-weight: 600;
         }
       }
       .title{
@@ -460,6 +566,9 @@ body{
       .act{
         width:calc(10% - 20px);
         text-align: center;
+      }
+      .diff{
+        width:calc(20% - 20px)
       }
       .postObj{
         color:#4c4d4d;
@@ -486,6 +595,12 @@ body{
         color:#4c4d4d;
         font-size: 20px;
       }
+      .bossLabel{
+        @extend .label;
+        float:right;
+        width: 77px;
+        text-align: center;
+      }
       .postTitle, .content, .upload{
         width:calc(100% - 60px);
         margin:4px 20px 20px 20px;
@@ -494,6 +609,37 @@ body{
         @include border-radius(4px);
         font-family: $font-ops;
         border:1px solid gainsboro;
+      }
+      .bosses{
+        table{
+          margin:0;
+          padding:0;
+          float:right;
+          margin-right:23px;
+          td{
+            padding-right:0;
+          }
+          th{
+            font-weight: normal
+          }
+        }
+      }
+      .remBoss{
+        @extend button;
+        background:#e53340!important;
+      }
+      .bossName{
+        @extend .postTitle;
+        width:calc(100% - 160px)!important
+      }
+      .bcMain, .bcHero, .bcMyth{
+        @extend .postTitle;
+        width: calc(33.3% - 62px);
+      }
+      .quesName{
+        @extend .postTitle;
+        margin-top:10px;
+        margin-bottom:10px;
       }
       button{
         margin:20px 20px 20px 20px;

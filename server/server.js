@@ -20,6 +20,7 @@ if(firstTime == 1){
   siteDetails.update({_id: 'recruiting'}, {$set:{dnB: 'checked', dnU: 'checked', dnF: 'checked', dhH: 'checked', dhV: 'checked', drB: 'checked', drF: 'checked', drR: 'checked', drG: 'checked', huM: 'checked', huS: 'checked', huB: 'checked', maF: 'checked', maFr: 'checked', maA: 'checked', moM: 'checked', moW: 'checked', moB: 'checked', paH: 'checked', paR: 'checked', paP: 'checked', prS: 'checked', prD: 'checked', prH: 'checked', roA: 'checked', roS: 'checked', roC: 'checked', shE: 'checked', shR: 'checked', shEn: 'checked', waA: 'checked', waD: 'checked', waDe: 'checked', warA: 'checked', warF: 'checked', warP: 'checked'}})
   console.log('hi')
   firstTime = 0
+  counts.insert({_id:"data", postCount:0, appCount:0, raidCount: 0})
 }
 
 
@@ -64,11 +65,21 @@ Meteor.methods({
     var path = process.env["PWD"] + '/.static~/';
 
     posts.insert({_id: id, title: title, content: content, imgPath: '/files/' + id+".jpeg", date:date})
+    counts.update({_id:"data"}, {$inc:{postCount: 1}})
     fs.writeFile(path+id+'.jpeg', imageBuffer,
     function (err) {
       if (err) throw err;
       console.log('Done!');
     })
+  },
+  'addRaid': (title, normS, heroS, mythS, bossName, bossStatN, bossStatH, bossStatM, addCC) =>{
+    //okay, I'm posting each boss and it's stats in an array. I need to break it up to show it, but I'm sure I can do that Client side.
+    raids.insert({title: title, normS: normS, heroS:heroS, mythS:mythS, bossName:bossName, bossStatN:bossStatN, bossStatH:bossStatH, bossStatM:bossStatM, length: addCC})
+    counts.update({_id:"data"}, {$inc:{raidCount: 1}})
+  },
+  'addQues': (ques, quesCount) =>{
+    questions.remove({})
+    questions.insert({ques:ques, quesCount:quesCount})
   }
 });
 

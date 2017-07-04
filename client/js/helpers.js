@@ -48,6 +48,12 @@ Template.news.helpers({
   }
 })
 
+Template.admin.helpers({
+  amount: () =>{
+    return counts.find({})
+  }
+})
+
 Template.article.helpers({
   posts : () =>{
     if(currentPage.get() == 'article'){
@@ -74,6 +80,30 @@ Template.index.helpers({
   }
 })
 
+Template.applyPage.helpers({
+  question: ()=>{
+    return questions.find({})
+  }
+})
+
+Template.loadPost.helpers({
+  post: ()=>{
+    return posts.find({})
+  }
+})
+
+Template.loadRaid.helpers({
+  raid: ()=>{
+    return raids.find({})
+  }
+})
+
+Template.raidStatus.helpers({
+  raid: ()=>{
+    return raids.find({})
+  }
+})
+
 Template.settings.helpers({
   rc: ()=>{
     return siteDetails.findOne({_id: 'recruiting'})
@@ -93,7 +123,7 @@ Template.recruiting.helpers({
   rDn: ()=>{
     //if any of the specs are there, let this class show up in the list
     if( siteDetails.findOne({_id: 'recruiting', dnB:true}) || siteDetails.findOne({_id: 'recruiting', dnU:true}) || siteDetails.findOne({_id: 'recruiting', dnF:true})){
-        return true;
+      return true;
     }
   },
   rDh: ()=>{

@@ -29,11 +29,14 @@ Template.admin.events({
     adminLoc.set('media');
   },
   'click .fa-file': ()=>{
-    adminLoc.set('applications');
+    adminLoc.set('apps');
   },
   'click .fa-cog': ()=>{
     adminLoc.set('settings');
   },
+  'click .fa-trophy': ()=>{
+    adminLoc.set('raids');
+  }
 })
 
 Template.newPost.events({
