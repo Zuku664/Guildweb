@@ -253,10 +253,20 @@
     <input type="file" accept="image/*" class="upload" id="input">
     <canvas id="canvas"></canvas>
     <div class="label" style="padding-bottom:10px">Catagory</div>
-    <span class="opt1 flair">News</span>
+    <span class="opt1">News</span>
     <span class="opt2">Boss Fight</span>
     <button id="post">Post</button>
     <input style="display:none" id="imageData"/>
+    <script>
+    $('.opt1').click(function(){
+      $('.opt2').removeClass('flair')
+      $('.opt1').addClass( "flair" )
+    })
+    $('.opt2').click(function(){
+      $('.opt1').removeClass('flair')
+      $('.opt2').addClass( "flair" )
+    })
+    </script>
   </div>
 </template>
 
@@ -274,7 +284,7 @@
       <div class="diff">
       </div>
       <div class="act">
-        <span class="fa fa-trash"></span><span class="fa fa-pencil"></span>
+        <span class="fa fa-trash"></span><span class="fa fa-eye"></span>
       </div>
     </div>
     {{/each}}
@@ -284,11 +294,34 @@
 <template name="appSet">
   <div class="postCon" style="border-top:5px solid #243136; padding-top:10px; padding-bottom:10px;">
     <span class="label">Add Questions</span>
+    {{#each question}}
+    <div id="quessCon">
+      <div class="questions" id="quesCon0">
+      </div>
+    </div>
+    <script>
+    var ques = "{{ques}}"
+    ques = ques.split('::,')
+    console.log(ques)
+
+    var amt = Number('{{quesCount}}')
+    amt += 1
+    console.log(amt)
+    for(var i = 0; i < amt; i++){
+      ques[i] = ques[i].replace("::", "")
+      $('#quesCon0').append('<input class="quesName" id="qu'+i+'">')
+      $("#qu"+i).val(ques[i]);
+      addQU += 1
+      console.log(addQU)
+    }
+    </script>
+    {{else}}
     <div id="quessCon">
       <div class="questions" id="quesCon0">
         <input class="quesName" placeholder="Question" id="qu0"/>
       </div>
     </div>
+    {{/each}}
     <button onclick="Meteor.addQues.addQues()" style="margin-top:0; display:inline">Add New Question</button>
     <button onclick="Meteor.addQues.remQues()" class="remBoss" style="margin-top:0; float:right">Remove Question</button>
     <button id="addApp" onclick="Meteor.addQues.postQues()">Change Application</button>

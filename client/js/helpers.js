@@ -39,8 +39,12 @@ Template.registerHelper('markdown', function (text, options) {
 
 Template.news.helpers({
   posts : () =>{
-    if(newsFilter.get() == 'news'){
-      return posts.find({});
+    if(newsFilter.get() == 'News'){
+      return posts.find({cataSux: "News"}, {sort:{date_created: -1}});
+    }else if(newsFilter.get() == "Boss"){
+      return posts.find({cataSux: "Boss"}, {sort:{date_created: -1}})
+    }else{
+      return posts.find({}, {sort:{date_created: -1}})
     }
   },
   images: () =>{
@@ -51,6 +55,18 @@ Template.news.helpers({
 Template.admin.helpers({
   amount: () =>{
     return counts.find({})
+  }
+})
+
+Template.appSet.helpers({
+  question: ()=>{
+    return questions.find({})
+  }
+})
+
+Template.loadApps.helpers({
+  app: ()=>{
+    return apps.find({})
   }
 })
 

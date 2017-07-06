@@ -1,5 +1,6 @@
 Meteor.publish("posts", function(){
-  return posts.find({});
+  //send data newest first to the client
+  return posts.find({}, {sort:{date_created: -1}});
 });
 
 Meteor.publish("raids", function(){
@@ -16,4 +17,8 @@ Meteor.publish("siteDetails", function(){
 
 Meteor.publish("counts", function(){
   return counts.find({});
+});
+
+Meteor.publish("apps", function(){
+  return apps.find({});
 });

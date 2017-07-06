@@ -3,6 +3,7 @@ BlazeLayout.setRoot('body');
 Meteor.subscribe('posts');
 Meteor.subscribe('raids');
 Meteor.subscribe('questions');
+Meteor.subscribe('apps');
 Meteor.subscribe('siteDetails');
 Meteor.subscribe('counts');
 
@@ -10,10 +11,10 @@ var currentFilter = 0;
 Meteor.newsFilter =({
   'change' : () =>{
     if(currentFilter == 0){
-      newsFilter.set('boss');
+      newsFilter.set('Boss');
       currentFilter = 1;
     }else{
-      newsFilter.set('news');
+      newsFilter.set('News');
       currentFilter = 0;
     }
   }
@@ -37,6 +38,7 @@ Meteor.addQues = ({
       ques.push($('#qu'+[i]).val()+"::")
     }
     Meteor.call('addQues', ques, addQU)
+    addQU = 0
   }
 })
 

@@ -49,7 +49,7 @@ Meteor.methods({
 })
 
 Meteor.methods({
-  'post': (imageData, title, content) =>{
+  'post': (imageData, title, content, cata) =>{
     // our data URL string from canvas.toDataUrl();
     var imageDataUrl = imageData;
     // declare a regexp to match the non base64 first characters
@@ -64,7 +64,16 @@ Meteor.methods({
     var date = res[1] + " " + res[2] + " " + res[3]
     var path = process.env["PWD"] + '/.static~/';
 
-    posts.insert({_id: id, title: title, content: content, imgPath: '/files/' + id+".jpeg", date:date})
+    var cata = cata;
+    if(cata.includes("News")){
+      cata = "News"
+    }else if(cata.includes("Boss")){
+      cata = "Boss"
+    }else{
+      //if no catagory is supplied, assume it's just news
+      cata = "News"
+    }
+    posts.insert({_id: id, title: title, content: content, imgPath: '/files/' + id+".jpeg", date:date, cataSux:cata, date_created: new Date()})
     counts.update({_id:"data"}, {$inc:{postCount: 1}})
     fs.writeFile(path+id+'.jpeg', imageBuffer,
     function (err) {
@@ -97,5 +106,12 @@ Meteor.methods({
     if(about != "" && about != undefined && about != null){
       siteDetails.update({_id:'about'}, {$set:{about: about}})
     }
+  }
+})
+
+Meteor.methods({
+  'sendApp': (questions, resps, amt) =>{
+    apps.insert({username: resps[0], questions: questions, resps:resps, amt:amt})
+    counts.update({_id:"data"}, {$inc:{appCount: 1}})
   }
 })

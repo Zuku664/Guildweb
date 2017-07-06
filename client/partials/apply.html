@@ -13,12 +13,13 @@
     console.log(amt)
     for(var i = 0; i < amt; i++){
       ques[i] = ques[i].replace("::", "")
-      $('.quesCon').append('<div class="quesTitle" id="'+ques[i]+'">'+ques[i]+'</div>')
-      $('.quesCon').append('<input class="quesResp" placeholder="Response" id="'+ques[i]+'">')
+      $('.quesCon').append('<div class="quesTitle">'+ques[i]+'</div>')
+      $('.quesCon').append('<input class="quesResp" placeholder="Response" id="qu'+i+'">')
     }
     </script>
   </div>
   {{/each}}
+  <button>Apply</button>
   {{/if}}
 </div>
 </template>

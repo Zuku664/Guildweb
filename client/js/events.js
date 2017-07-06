@@ -3,6 +3,7 @@ Template.nav.events({
   'click #home': () => {
     //set the current page to feed (home)
     currentPage.set("feed")
+    newsFilter.set("")
   },
   'click #about': () =>{
     currentPage.set("about")
@@ -12,6 +13,7 @@ Template.nav.events({
   },
   'click #news': () =>{
     currentPage.set("news")
+    newsFilter.set("News")
   },
   'click #apply': () =>{
     currentPage.set("apply")
@@ -39,6 +41,21 @@ Template.admin.events({
   }
 })
 
+Template.applyPage.events({
+  'click button': ()=>{
+    //store the questions for if they change
+    var questions = []
+    var resps = []
+    for(var i = 0; i < amt; i++){
+      questions.push(ques[i]+"::")
+      resps.push($('#qu'+i).val())
+    }
+    console.log(questions)
+    console.log(resps)
+    Meteor.call("sendApp", questions, resps, amt)
+  }
+})
+
 Template.newPost.events({
   'click .upload': () =>{
     //get image, resizes image in canvas then converts to base64 and sends to the server
@@ -57,7 +74,6 @@ Template.newPost.events({
       img.src = URL.createObjectURL(e.target.files[0]);
       //when its loaded do this
       img.onload = function() {
-
         //modify the cancas
         canvas.height = canvas.width * (img.height / img.width) * 3;
         canvas.width = canvas.width * 3
@@ -85,7 +101,9 @@ Template.newPost.events({
       var imageData = $('#imageData').val()
       var title = $('#title').val()
       var content = $('.content').val()
-      Meteor.call('post', imageData, title, content)
+      var cata = $('.flair').html()
+      console.log(cata)
+      Meteor.call('post', imageData, title, content, cata)
     }
   })
 
@@ -94,9 +112,8 @@ Template.newPost.events({
     'click #post':()=>{
       var specLength = 35; //is 36, but we count from 0
       var spec = ['dnB','dnU','dnF','dhH','dhV','drB','drF','drR','drG','huM','huS','huB','maF','maFr','maA','moM','moW','moB','paH','paR','paP','prS','prD','prH','roA','roS','roC','shE','shR','shEn','waA','waD','waDe','warA','warF','warP']
-
-      var specStatus = []
       //'''
+      var specStatus = []
       for(var i = 0; i < specLength; i++){
         specStatus.push($('#'+spec[i]).prop('checked'));
       }
