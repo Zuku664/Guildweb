@@ -51,15 +51,12 @@ Template.news.helpers({
     }else{
       return posts.find({}, {sort:{date_created: -1}})
     }
-  },
-  images: () =>{
-    myFiles.find({})
   }
 })
 
 Template.feed.helpers({
   'image': ()=>{
-    return posts.find({cataSux:"Boss"})
+    return images.find({}, {sort: {date_created: -1}})
   }
 })
 

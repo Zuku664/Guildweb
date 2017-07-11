@@ -76,6 +76,9 @@ Meteor.methods({
       }
       posts.insert({_id: id, title: title, content: content, imgPath: '/files/' + id+".jpeg", date:date, cataSux:cata, date_created: new Date()})
       counts.update({_id:"data"}, {$inc:{postCount: 1}})
+      if(cata == "Boss"){
+        images.insert({_id: id, title:title, imgPath: '/files/' + id+".jpeg", date_created: new Date()})
+      }
       fs.writeFile(path+id+'.jpeg', imageBuffer,
       function (err) {
         if (err) throw err;

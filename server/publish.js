@@ -1,6 +1,11 @@
-Meteor.publish("posts", function(){
+Meteor.publish("posts", function(limit){
+  var dl = limit || 7;
   //send data newest first to the client
-  return posts.find({}, {sort:{date_created: -1}});
+  if(!this.userId){
+    return posts.find({}, {sort:{date_created: -1}, limit: dl});
+  }else{
+    return posts.find({})
+  }
 });
 
 Meteor.publish("raids", function(){
@@ -23,6 +28,7 @@ Meteor.publish("apps", function(){
   return apps.find({});
 });
 
+
 Meteor.publish('images', function(search, post){
-  return posts.find({cataSux: "Boss"});
+  return images.find({}, {sort: {date_created: -1}, limit: 7});
 })

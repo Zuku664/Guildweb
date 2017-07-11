@@ -1,11 +1,13 @@
 BlazeLayout.setRoot('body');
 
+Deps.autorun( function(){Meteor.subscribe('posts', postLimitServer.get())});
 Meteor.subscribe('posts');
 Meteor.subscribe('raids');
 Meteor.subscribe('questions');
 Meteor.subscribe('apps');
 Meteor.subscribe('siteDetails');
 Meteor.subscribe('counts');
+Meteor.subscribe("images");
 
 var currentFilter = 0;
 Meteor.newsFilter =({

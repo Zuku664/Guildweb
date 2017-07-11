@@ -13,5 +13,31 @@
       </div>
     </div>
     {{/each}}
+    <script>
+    var fired = false;
+    var canFire = true;
+    jQuery(function($) {
+      $(document).on('scroll', function() {
+        if($(this).scrollTop() + $(this).innerHeight() >= document.body.scrollHeight + 910) {
+          //if it hits 20 above bottom
+          //it fired
+          fired = true;
+          //if you can fire and can fire are true
+          if(fired == true && canFire == true){
+            //add 6 to loaded posts
+            postLimitServer.set(postLimitServer.get() + 4);
+            //disable can fire
+            canFire = false;
+            //disable this event
+            $( this ).off( event );
+          }
+        }else{
+          //when this fires again with canfire off, canfire is on for next loading
+          canFire = true;
+          //this prevents more than 6 posts to be loaded per firing
+        }
+      })
+    });
+    </script>
   </div>
 </template>
