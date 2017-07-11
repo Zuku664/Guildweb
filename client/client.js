@@ -21,24 +21,38 @@ Meteor.newsFilter =({
 })
 
 addQU = 0
+var firstQues
 Meteor.addQues = ({
   'addQues': () =>{
-    addQU += 1
+    if(addQU == 0){
+      addQU += 1
+      firstQues = true
+    }
     let thisQues = '"qu'+addQU+'"'
     $('.questions').append('<input class="quesName" placeholder="Question" id='+thisQues+'</input>')
+    if(firstQues == true){
+      firstQues = false
+    }else{
+      addQU += 1
+    }
   },
   'remQues': () =>{
-    let ques = '#qu'+addQU
+    var remNum = addQU - 1
+    var ques = '#qu'+remNum
+    console.log(ques)
     $( ques ).remove();
     addQU -= 1
   },
   'postQues': ()=>{
     let ques = []
-    for(var i = 0; i < addQU+1; i++){
+    var test = addQU
+    for(var i = 0; i < test; i++){
       ques.push($('#qu'+[i]).val()+"::")
     }
+    console.log('post : '+ques)
     Meteor.call('addQues', ques, addQU)
     addQU = 0
+    location.reload();
   }
 })
 
@@ -101,5 +115,81 @@ Meteor.addBoss = ({
       }
     }
     Meteor.call('addRaid', title, normS, heroS, mythS, bossName, bossStatN, bossStatH, bossStatM, addCC)
+    location.reload();
+  }
+})
+
+var addCE = 0 - 1
+Meteor.editBoss = ({
+  'addBoss': (target) =>{
+    addCE += target
+    addCE += 1
+    let bossCon = '"editBossCon'+addCE+'"'
+    let thisAbn = '"editAbn'+addCE+'"'
+    let thisAbsN = '"editAbsN'+addCE+'"'
+    let thisAbsH = '"editAbsH'+addCE+'"'
+    let thisAbsM = '"editAbsM'+addCE+'"'
+
+    $('#editBossCon').append('<div class="bosses" id='+bossCon+'><input class="bossName" placeholder="Boss Name" id='+thisAbn+'/> \
+    <table> \
+    <th>&nbsp;N&nbsp;&nbsp;&nbsp;H&nbsp;&nbsp;&nbsp;M</th> \
+    <tr> \
+    <td> \
+    <input type="checkbox" id='+thisAbsN+'/> \
+    <input type="checkbox" id='+thisAbsH+'/> \
+    <input type="checkbox" id='+thisAbsM+'/> \
+    </td> \
+    </tr> \
+    </table></div>')
+    addCE -= target
+  },
+  'remBoss' : (target) =>{
+    addCE += target
+    let bossCon = '#editBossCon'+addCE
+    $( bossCon ).remove();
+    addCE -= target + 1
+  },
+  'postBoss': (target, num) =>{
+    let title = $('#editBossTitle').val()
+    let normS = $('#editBcMain').val()
+    let heroS = $('#editBcHero').val()
+    let mythS = $('#editBcMyth').val()
+    let bossName = []
+    let bossStatN = []
+    let bossStatH = []
+    let bossStatM = []
+
+    if(addCE <= 0){
+      count = num -1
+      console.log('num')
+    }else{
+      count = addCE
+      console.log('add')
+    }
+    console.log(count)
+    for(var i = 0; i < count+1; i++){
+      bossName.push($('#editAbn'+[i]).val()+"::")
+      if ($('#editAbsN'+[i]).is(":checked"))
+      {
+        bossStatN.push('DEAD')
+      }else{
+        bossStatN.push('ALIVE')
+      }
+      if ($('#editAbsH'+[i]).is(":checked"))
+      {
+        bossStatH.push('DEAD')
+      }else{
+        bossStatH.push('ALIVE')
+      }
+      if ($('#editAbsM'+[i]).is(":checked"))
+      {
+        bossStatM.push('DEAD')
+      }else{
+        bossStatM.push('ALIVE')
+      }
+    }
+
+    Meteor.call('updateRaid', title, normS, heroS, mythS, bossName, bossStatN, bossStatH, bossStatM, count, target)
+    location.reload();
   }
 })

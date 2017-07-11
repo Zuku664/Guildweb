@@ -6,6 +6,7 @@
   <title>openGuild | FinchMFG</title>
 </head>
 <template name="index">
+  {{>adminHeader}}
   {{>nav}}
   {{>feed}}
 
@@ -15,4 +16,13 @@
   document.title = "{{title.title}}"
   </script>
   {{/if}}
+</template>
+<!-- signin area -->
+<template name="signin">
+  <!-- only shows login form if you're not actually logged in -->
+  {{#unless currentUser}}
+  {{>login}}
+  {{else}}
+  {{>index}}
+  {{/unless}}
 </template>

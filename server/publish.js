@@ -22,3 +22,7 @@ Meteor.publish("counts", function(){
 Meteor.publish("apps", function(){
   return apps.find({});
 });
+
+Meteor.publish('images', function(search, post){
+  return posts.find({cataSux: "Boss"});
+})

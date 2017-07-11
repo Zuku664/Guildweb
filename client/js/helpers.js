@@ -12,6 +12,11 @@ Template.registerHelper("equals", function(a, b){
   return a === b
 })
 
+//carousel image loader
+Template.registerHelper("caroImg", function(a, b){
+  return currentImage.get()
+})
+
 Template.registerHelper('markdown', function (text, options) {
   kramed.setOptions({
     renderer: new kramed.Renderer()
@@ -52,6 +57,12 @@ Template.news.helpers({
   }
 })
 
+Template.feed.helpers({
+  'image': ()=>{
+    return posts.find({cataSux:"Boss"})
+  }
+})
+
 Template.admin.helpers({
   amount: () =>{
     return counts.find({})
@@ -67,6 +78,18 @@ Template.appSet.helpers({
 Template.loadApps.helpers({
   app: ()=>{
     return apps.find({})
+  }
+})
+
+Template.viewApp.helpers({
+  viewApp: ()=>{
+    return apps.find({_id: currentApp.get()})
+  }
+})
+
+Template.editRaid.helpers({
+  'editRaid': ()=>{
+    return raids.find({_id: currentRaid.get()})
   }
 })
 
@@ -105,6 +128,12 @@ Template.applyPage.helpers({
 Template.loadPost.helpers({
   post: ()=>{
     return posts.find({})
+  }
+})
+
+Template.editPost.helpers({
+  post: ()=>{
+    return posts.find({_id: currentPost.get()})
   }
 })
 

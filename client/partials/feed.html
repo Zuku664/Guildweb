@@ -4,22 +4,16 @@
       <!-- blaze templates, equals and currentPage defined in js/helpers.js-->
       {{#if equals currentPage "feed"}}
       <div class="homeGallery">
-        <img src="https://s3.amazonaws.com/files.enjin.com/431279/boss_kills/Star%20Augur%20Mythic.jpg" />
+        <img src="{{caroImg}}"/>
         <div class="thumbs">
-          <div class="cover"></div>
-          <img src="https://s3.amazonaws.com/files.enjin.com/431279/boss_kills/Star%20Augur%20Mythic.jpg" />
-          <div class="cover"></div>
-          <img src="https://s3.amazonaws.com/files.enjin.com/431279/boss_kills/Hight%20Botanist%20Mythic.jpg" />
-          <div class="cover"></div>
-          <img src="https://s3.amazonaws.com/files.enjin.com/431279/boss_kills/Ticondrius%20Mythic.jpg" />
-          <div class="cover"></div>
-          <img src="https://s3.amazonaws.com/files.enjin.com/431279/boss_kills/Spellblade%20Mythic.jpg" />
-          <div class="cover"></div>
-          <img src="https://s3.amazonaws.com/files.enjin.com/431279/boss_kills/Krosus%20Mythic.jpg" />
-          <div class="cover"></div>
-          <img src="https://s3.amazonaws.com/files.enjin.com/431279/boss_kills/Trilliax%20Mythic.jpg" />
-          <div class="cover"></div>
-          <img src="https://s3.amazonaws.com/files.enjin.com/431279/boss_kills/Chronomatic%20Anomaly%20Mythic.jpg" />
+          {{#each image}}
+          <div class="cover" onclick="currentImage.set('{{imgPath}}');"></div>
+          <img src="{{imgPath}}"/>
+          <script>
+          if(currentImage.get() == ''){
+            currentImage.set('{{imgPath}}')
+          }</script>
+          {{/each}}
         </div>
       </div>
       {{> news}}
