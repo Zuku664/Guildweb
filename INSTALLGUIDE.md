@@ -197,7 +197,6 @@ You should see something like
 Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name
 tcp        0      0 127.0.0.1:27017         0.0.0.0:*               LISTEN      19525/mongod  
 ```
-
 On your local machine, copy your server tarball to your VPS
 On linux
 ```
