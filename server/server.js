@@ -18,9 +18,9 @@ for(var i = 0; i < needed.length; i++){
 if(firstTime == 1){
   //wow
   siteDetails.update({_id: 'recruiting'}, {$set:{dnB: 'checked', dnU: 'checked', dnF: 'checked', dhH: 'checked', dhV: 'checked', drB: 'checked', drF: 'checked', drR: 'checked', drG: 'checked', huM: 'checked', huS: 'checked', huB: 'checked', maF: 'checked', maFr: 'checked', maA: 'checked', moM: 'checked', moW: 'checked', moB: 'checked', paH: 'checked', paR: 'checked', paP: 'checked', prS: 'checked', prD: 'checked', prH: 'checked', roA: 'checked', roS: 'checked', roC: 'checked', shE: 'checked', shR: 'checked', shEn: 'checked', waA: 'checked', waD: 'checked', waDe: 'checked', warA: 'checked', warF: 'checked', warP: 'checked'}})
-  console.log('hi')
-  firstTime = 0
+  userCount.insert({count:0})
   counts.insert({_id:"data", postCount:0, appCount:0, raidCount: 0})
+  firstTime = 0
 }
 
 
@@ -79,11 +79,16 @@ Meteor.methods({
       if(cata == "Boss"){
         images.insert({_id: id, title:title, imgPath: '/files/' + id+".jpeg", date_created: new Date()})
       }
+      var canReload = false
       fs.writeFile(path+id+'.jpeg', imageBuffer,
       function (err) {
         if (err) throw err;
         console.log('Done!');
+        canReload = true
       })
+      if(canReload == true){
+        return true
+      }
     }
   },
   'addRaid': (title, normS, heroS, mythS, bossName, bossStatN, bossStatH, bossStatM, addCC) =>{
@@ -143,6 +148,7 @@ Meteor.methods({
       var filePath = process.env["PWD"] + '/.static~/'+post+'.jpeg';
       fs.unlinkSync(filePath);
       posts.remove({_id:post})
+      images.remove({_id:post})
       counts.update({_id:"data"}, {$inc:{postCount: -1}})
     }
   },

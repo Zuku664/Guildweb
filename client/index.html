@@ -6,7 +6,9 @@
   <title>openGuild | FinchMFG</title>
 </head>
 <template name="index">
-  {{>adminHeader}}
+  {{#if currentUser}}
+    {{>adminHeader}}
+  {{/if}}
   {{>nav}}
   {{>feed}}
 

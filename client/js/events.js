@@ -109,8 +109,12 @@ Template.newPost.events({
         cata = "News"
       }
       console.log(cata)
-      Meteor.call('post', imageData, title, content, cata)
-      location.reload();
+      Meteor.call('post', imageData, title, content, cata, function(err, result){
+        if(!err){
+          location.reload();
+        }
+      })
+
     }
   })
 

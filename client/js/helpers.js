@@ -124,7 +124,7 @@ Template.applyPage.helpers({
 
 Template.loadPost.helpers({
   post: ()=>{
-    return posts.find({})
+    return posts.find({}, {sort: {date_created: -1}})
   }
 })
 
