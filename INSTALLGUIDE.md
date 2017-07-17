@@ -1,13 +1,41 @@
 # OpenGuild Install Guide
------
+
+# Table of Contents
+1. [Introduction](#introduction)
+2. [Requirements](#requirements)
+3. [Manual Installation](#manual)
+    - One
+4. [Auto installtion Via Install script](#auto)
+
+<a name="introduction"></a>
 ### Introduction
 Hey there, thanks for downloading OpenGuild! If you have any suggestions either for this app or any future apps, be sure to let me know! 
 If you have any questions for how to use this software, be sure to check out this wiki.
 If you find any bugs, you can open a a new issue on this projects GitHub! 
+<a name="requirements"></a>
 ### Requirements
 - Ubuntu 14
 
-### The Setup
+<a name="auto"></a>
+### Auto installtion
+Copy the application tarball and the install.sh script to the home directory of your VPS. On linux this can be done by running
+```
+scp openGuild-CMS.tar.gz root@YOUR_IP_ADDRESS:/home
+scp install.sh root@YOUR_IP_ADDRESS:/home
+```
+SSH into your VPS and CD into home/
+```
+ssh root@YOUR_IP_ADDRESS
+cd /home/
+```
+Run install.sh
+```
+./install.sh
+```
+This will auto install all dependencies and start the server for you!
+
+<a name="manual"></a>
+### Manual Installtion
 SSH into your VPS
 ```
 ssh root@your_ip_here
@@ -16,6 +44,10 @@ CD into your home folder and create a new directory with the name of your app
 ```
 cd /home/
 mkdir YOURAPPNAME
+```
+You need to make a directory to store images
+```
+mkdir /home/YOURAPPNAME/.static~
 ```
 You'll want to update your known repo list to pull some required apps from the web!
 ```
@@ -111,7 +143,7 @@ CTRL-X
 ```
 Make it read write exec for all
 ```
-chmod 777 startserver.sh
+chmod 777 /home/YOURAPPNAME/startserver.sh
 ```
 
 Install nginx
@@ -230,3 +262,4 @@ cd /home/YOURAPPNAME
 ./startserver.sh
 ```
 And we'll get you sorted!
+

@@ -7,10 +7,13 @@ An opensource Guild CMS system for WoW.
  - Track Raids
  - Show who you're recruiting
 
-### Wanna help? 
-<a href='https://ko-fi.com/A7012K2H' target='_blank'><img height='51' style='border:0px;height:51px;' src='https://az743702.vo.msecnd.net/cdn/kofi2.png?v=0' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
+![homepage](http://i.imgur.com/cp1kncO.jpg)
 
-[![Support me on Patreon!](https://c5.patreon.com/external/logo/become_a_patron_button.png)](https://patreon.com/finchMFG)
+### Wanna help? 
+<a href='https://ko-fi.com/A7012K2H' target='_blank'><img height='51' style='border:0px;height:51px;' src='https://az743702.vo.msecnd.net/cdn/kofi2.png?v=0' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a> [![Support me on Patreon!](https://c5.patreon.com/external/logo/become_a_patron_button.png)](https://patreon.com/finchMFG)
+
+### Installation
+You can find [install directions](INSTALLGUIDE.md) here.
 
 
 Of course there are other ways you can help!

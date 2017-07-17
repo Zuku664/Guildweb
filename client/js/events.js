@@ -114,6 +114,7 @@ Template.newPost.events({
           location.reload();
         }
       })
+      $('#post').prop('disabled', true);
 
     }
   })
