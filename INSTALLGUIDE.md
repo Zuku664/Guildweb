@@ -1,11 +1,10 @@
 # OpenGuild Install Guide
 
-# Table of Contents
+### Table of Contents
 1. [Introduction](#introduction)
 2. [Requirements](#requirements)
-3. [Manual Installation](#manual)
-    - One
-4. [Auto installtion Via Install script](#auto)
+3. [Auto installtion Via Install script](#auto)
+4. [Manual Installation](#manual)
 
 <a name="introduction"></a>
 ### Introduction
