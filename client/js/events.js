@@ -4,19 +4,20 @@ Template.nav.events({
     //set the current page to feed (home)
     currentPage.set("feed")
     newsFilter.set("")
+    Meteor.pushState.pushState('feed')
   },
   'click #about': () =>{
     currentPage.set("about")
-  },
-  'click #events': () =>{
-    currentPage.set("events")
+    Meteor.pushState.pushState('about')
   },
   'click #news': () =>{
     currentPage.set("news")
     newsFilter.set("News")
+    Meteor.pushState.pushState('news')
   },
   'click #apply': () =>{
     currentPage.set("apply")
+    Meteor.pushState.pushState('apply')
   }
 })
 
@@ -50,8 +51,6 @@ Template.applyPage.events({
       questions.push(ques[i]+"::")
       resps.push($('#qu'+i).val()+"::")
     }
-    console.log(questions)
-    console.log(resps)
     Meteor.call("sendApp", questions, resps, amt)
     location.reload();
   }
@@ -108,7 +107,6 @@ Template.newPost.events({
         //default to news
         cata = "News"
       }
-      console.log(cata)
       Meteor.call('post', imageData, title, content, cata, function(err, result){
         if(!err){
           location.reload();

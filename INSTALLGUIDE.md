@@ -5,6 +5,8 @@
 2. [Requirements](#requirements)
 3. [Auto installtion Via Install script](#auto)
 4. [Manual Installation](#manual)
+5. [First time Login](#login)
+6. [URL's tk know](#url)
 
 <a name="introduction"></a>
 ### Introduction
@@ -262,3 +264,18 @@ cd /home/YOURAPPNAME
 ```
 And we'll get you sorted!
 
+<a name="login"></a>
+### First time Login
+The first time you login will create an account with those details. There is no register button, instead when you click login for the first time you must provide the secret key when it prompts you for it.
+```
+SnowyTableSanDiegoFifteenTwelve
+```
+When you click unlock, an account with those deatils will be created. You can now access /admin
+
+<a name="url"></a>
+### URL's to know
+These are all the URL's on the website
+```
+/admin
+/admin-login
+```

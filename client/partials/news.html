@@ -2,7 +2,7 @@
   <!-- since news is used in two places, creating a template is DRY-->
   <div class="news">
     {{#each posts}}
-    <div class="articleFeed" onclick="currentPage.set('article'); currentPost.set('{{_id}}')">
+    <div class="articleFeed" onclick="currentPage.set('article'); currentPost.set('{{_id}}'); Meteor.pushState.pushState(currentPost.get())">
       <img src="{{imgPath}}" />
       <div class="articleDim"></div>
       <div class="title">

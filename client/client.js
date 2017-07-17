@@ -41,7 +41,6 @@ Meteor.addQues = ({
   'remQues': () =>{
     var remNum = addQU - 1
     var ques = '#qu'+remNum
-    console.log(ques)
     $( ques ).remove();
     addQU -= 1
   },
@@ -51,7 +50,6 @@ Meteor.addQues = ({
     for(var i = 0; i < test; i++){
       ques.push($('#qu'+[i]).val()+"::")
     }
-    console.log('post : '+ques)
     Meteor.call('addQues', ques, addQU)
     addQU = 0
     location.reload();
@@ -163,12 +161,9 @@ Meteor.editBoss = ({
 
     if(addCE <= 0){
       count = num -1
-      console.log('num')
     }else{
       count = addCE
-      console.log('add')
     }
-    console.log(count)
     for(var i = 0; i < count+1; i++){
       bossName.push($('#editAbn'+[i]).val()+"::")
       if ($('#editAbsN'+[i]).is(":checked"))
@@ -195,3 +190,15 @@ Meteor.editBoss = ({
     location.reload();
   }
 })
+
+Meteor.pushState ={
+  pushState:(target) =>{
+    window.history.pushState("object or string", "Title", "/"+window.location.href.substring(window.location.href.lastIndexOf('/') + 1));
+    if(target == 'feed' || target == 'news' || target == 'apply' || target == 'about'){
+      history.pushState('', document.title, target);
+    }
+    else{
+      history.pushState('', document.title, "p/"+target);
+    }
+  }
+}
