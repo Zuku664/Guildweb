@@ -19,6 +19,11 @@ If you find any bugs, you can open a a new issue on this projects GitHub!
 
 <a name="auto"></a>
 ### Auto installtion
+Change the APPNAME and APPURL inside install.sh to your app name and your URL
+```
+APPNAME='YOURAPPNAME'
+APPURL='YOURAPPURL'
+```
 Copy the application tarball and the install.sh script to the home directory of your VPS. On linux this can be done by running
 ```
 scp openGuild-CMS.tar.gz root@YOUR_IP_ADDRESS:/home
