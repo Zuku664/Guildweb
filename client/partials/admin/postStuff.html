@@ -32,7 +32,7 @@
     <textarea class="content" placeholder="Content"></textarea>
     <div class="label">Upload Image</div>
     <input type="file" accept="image/*" class="upload" id="input">
-    <canvas id="canvas"></canvas>
+    <canvas id="canvas" style="display:none"></canvas>
     <div class="label" style="padding-bottom:10px">Catagory</div>
     <span class="opt1">News</span>
     <span class="opt2">Boss Fight</span>
@@ -58,10 +58,25 @@
     <input class="postTitle" placeholder="title" id="editTitle"/>
     <span class="label">Content</span>
     <textarea class="content" placeholder="Content" id="editContent"></textarea>
+    <div class="label">Upload Image</div>
+    <input type="file" accept="image/*" class="upload" id="input">
+    <canvas id="canvas2" style="display:none"></canvas>
+    <span class="opt1">News</span>
+    <span class="opt2">Boss Fight</span>
     <button id="editPost">Edit</button>
+    <input style="display:none" id="imageData2"/>
     <script>
     $('#editTitle').val("{{title}}")
     $('#editContent').val(`{{content}}`)
+
+    $('.opt1').click(function(){
+      $('.opt2').removeClass('flair')
+      $('.opt1').addClass( "flair" )
+    })
+    $('.opt2').click(function(){
+      $('.opt1').removeClass('flair')
+      $('.opt2').addClass( "flair" )
+    })
     </script>
     {{/each}}
   </div>

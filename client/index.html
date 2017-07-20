@@ -4,10 +4,11 @@
   <link href="https://fonts.googleapis.com/css?family=Montserrat|Raleway|Varela|Baloo|Open+Sans|Roboto" rel="stylesheet">
   <!-- change me! Otherwise this might show in search engines!-->
   <title>openGuild | FinchMFG</title>
+  <meta name="description" content="openGuild-CMS | the open source WoW guild software"/>
 </head>
 <template name="index">
   {{#if currentUser}}
-    {{>adminHeader}}
+  {{>adminHeader}}
   {{/if}}
   {{>nav}}
   {{>feed}}
@@ -16,6 +17,17 @@
   {{#if title.title}}
   <script>
   document.title = "{{title.title}}"
+  </script>
+  {{/if}}
+  {{#if about.about}}
+  <script>
+  $('meta[name=description]').attr('content', '{{about.about}}');
+  </script>
+  {{/if}}
+  {{#if background.path}}
+  <script>
+  document.body.style.background = "url({{background.path}})";
+  $('.photoCredit').hide()
   </script>
   {{/if}}
 </template>

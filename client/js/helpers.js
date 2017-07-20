@@ -7,6 +7,12 @@ Template.registerHelper("adminLoc", function(){
   return adminLoc.get()
 })
 
+Template.registerHelper('bossExists', function(){
+  if(images.findOne({})){
+    return true;
+  }
+})
+
 //adds logic to Blaze
 Template.registerHelper("equals", function(a, b){
   return a === b
@@ -74,7 +80,7 @@ Template.appSet.helpers({
 
 Template.loadApps.helpers({
   app: ()=>{
-    return apps.find({})
+    return apps.find({}, {sort:{date: -1}})
   }
 })
 
@@ -113,6 +119,12 @@ Template.newsHeader.helpers({
 Template.index.helpers({
   title: ()=>{
     return siteDetails.findOne({_id: 'title'})
+  },
+  about: ()=>{
+    return siteDetails.findOne({_id: 'about'})
+  },
+  background: ()=>{
+    return siteDetails.findOne({_id: 'background'})
   }
 })
 
@@ -136,13 +148,13 @@ Template.editPost.helpers({
 
 Template.loadRaid.helpers({
   raid: ()=>{
-    return raids.find({})
+    return raids.find({}, {sort:{date: -1}})
   }
 })
 
 Template.raidStatus.helpers({
   raid: ()=>{
-    return raids.find({})
+    return raids.find({}, {sort: {date: -1}})
   }
 })
 

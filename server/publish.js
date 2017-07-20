@@ -9,7 +9,7 @@ Meteor.publish("posts", function(limit){
 });
 
 Meteor.publish("raids", function(){
-  return raids.find({});
+  return raids.find({}, {sort:{date: -1}});
 });
 
 Meteor.publish("questions", function(){
@@ -25,7 +25,7 @@ Meteor.publish("counts", function(){
 });
 
 Meteor.publish("apps", function(){
-  return apps.find({});
+  return apps.find({}, {sort:{date: -1}});
 });
 
 

@@ -62,7 +62,7 @@ body{
   background-repeat: no-repeat !important;
   background-position: center top !important;
   background:url('backgrounds/background1.jpg');
-  background-attachment: fixed;
+  background-attachment: fixed!important;
 }
 
 .fa{
@@ -245,6 +245,8 @@ body{
         display: block;
         min-width: 88px;
         width:70%;
+        max-width:145.594;
+        max-height:145.594;
       }
     }
     .button:hover{
@@ -259,6 +261,7 @@ body{
   }
   .homeGallery{
     border:7px solid #212121;
+    margin-bottom:10px;
     img{
       width: 100%;
       display: block;
@@ -770,58 +773,6 @@ body{
     }
   }
   .raidStatus{
-    display:none;
-  }
-}
-
-
-@media (min-width: 750px){
-  .widgets{
-    float:right;
-    width:30%;
-  }
-  .content{
-    width:calc(70% - 20px);
-  }
-  .adminHeader{
-    //green background: #00a857;
-    background: #0073b9;
-    width:100%;
-    height:60px;
-    display: block;
-    div{
-      float:right;
-      color:#e2f5ed;
-      font-family: $font-ops;
-      padding-right:20px;
-      cursor: pointer;
-      line-height: 60px;
-    }
-  }
-  .nav{
-    border:1px solid #222222;
-    overflow: visible;
-    margin-top:50px;
-    position: relative;
-    .button{
-      cursor: pointer;
-      @include non-text-select;
-      width:20%;
-      line-height: 60px;
-    }
-    .logo{
-      width: 20%;
-      img{
-        margin-top:-45px;
-        min-width: 145px;
-        width:70%;
-      }
-    }
-  }
-  .feed{
-    margin-top:0;
-  }
-  .raidStatus{
     display: block;
     border:1px solid #222222;
     margin-top:10px;
@@ -906,6 +857,55 @@ body{
       height:100%;
       background-color: #983e0b;
     }
+  }
+}
+
+
+@media (min-width: 750px){
+  .widgets{
+    float:right;
+    width:30%;
+  }
+  .content{
+    width:calc(70% - 20px);
+  }
+  .adminHeader{
+    //green background: #00a857;
+    background: #0073b9;
+    width:100%;
+    height:60px;
+    display: block;
+    div{
+      float:right;
+      color:#e2f5ed;
+      font-family: $font-ops;
+      padding-right:20px;
+      cursor: pointer;
+      line-height: 60px;
+    }
+  }
+  .nav{
+    border:1px solid #222222;
+    overflow: visible;
+    margin-top:50px;
+    position: relative;
+    .button{
+      cursor: pointer;
+      @include non-text-select;
+      width:20%;
+      line-height: 60px;
+    }
+    .logo{
+      width: 20%;
+      img{
+        margin-top:-45px;
+        min-width: 145px;
+        width:70%;
+      }
+    }
+  }
+  .feed{
+    margin-top:0;
   }
 }
 

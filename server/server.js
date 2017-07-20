@@ -79,6 +79,21 @@ Meteor.methods({
       if(cata == "Boss"){
         images.insert({_id: id, title:title, imgPath: '/files/' + id+".jpeg", date_created: new Date()})
       }
+      if(imageData == ''){
+        var rand = Math.floor(Math.random() * 3) + 1
+        var img = ''
+        if(rand == 1){
+          img = 'default1.jpg'
+        }else if(rand == 2){
+          img = 'default2.jpg'
+        }else{
+          img = 'default3.jpg'
+        }
+        posts.update({_id: id}, {$set: {imgPath: '/'+img}})
+        if(cata == "Boss"){
+          images.update({_id: id}, {$set: {imgPath: '/' + img}})
+        }
+      }
       var canReload = false
       fs.writeFile(path+id+'.jpeg', imageBuffer,
       function (err) {
@@ -91,10 +106,10 @@ Meteor.methods({
       }
     }
   },
-  'addRaid': (title, normS, heroS, mythS, bossName, bossStatN, bossStatH, bossStatM, addCC) =>{
+  'addRaid': (title, bossName, bossStatN, bossStatH, bossStatM, addCC) =>{
     if(Meteor.user()){
       //okay, I'm posting each boss and it's stats in an array. I need to break it up to show it, but I'm sure I can do that Client side.
-      raids.insert({title: title, normS: normS, heroS:heroS, mythS:mythS, bossName:bossName, bossStatN:bossStatN, bossStatH:bossStatH, bossStatM:bossStatM, length: addCC})
+      raids.insert({title: title, bossName:bossName, bossStatN:bossStatN, bossStatH:bossStatH, bossStatM:bossStatM, length: addCC, date: new Date()})
       counts.update({_id:"data"}, {$inc:{raidCount: 1}})
     }
   },
@@ -107,13 +122,48 @@ Meteor.methods({
 });
 
 Meteor.methods({
-  'updateSite': (specStatus, title, about) =>{
+  'updateSite': (specStatus, title, about, tabard, background) =>{
     if(Meteor.user()){
       var spec = ['dnB','dnU','dnF','dhH','dhV','drB','drF','drR','drG','huM','huS','huB','maF','maFr','maA','moM','moW','moB','paH','paR','paP','prS','prD','prH','roA','roS','roC','shE','shR','shEn','waA','waD','waDe','warA','warF','warP']
+      var images = []
+      var canReload = []
+      if(tabard != ''){
+        images.push('tabard')
+        canReload.push('0')
+      }
+      if(background != ''){
+        images.push('background')
+        canReload.push('0')
+      }
+      var path = process.env["PWD"] + '/.static~/';
+      for(var i = 0; i < images.length; i++){
+        // our data URL string from canvas.toDataUrl();
+        var imageDataUrl = eval(images[i]);
+        // declare a regexp to match the non base64 first characters
+        var dataUrlRegExp = /^data:image\/\w+;base64,/;
+        // remove the "header" of the data URL via the regexp
+        var base64Data = imageDataUrl.replace(dataUrlRegExp, "");
+        // declare a binary buffer to hold decoded base64 data
+        var imageBuffer = new Buffer(base64Data, "base64");
+        fs.writeFile(path+images[i]+'.jpeg', imageBuffer,
+        function (err) {
+          if (err) throw err;
+          console.log('Done!');
+          canReload[i] = 1
+        })
+        siteDetails.update({_id:images[i]}, {$set:{path: '/files/' + images[i]+".jpeg"}})
+      }
 
-      //for loop wont work, as I can only assign the value and not the property
+      var reloadLength = canReload.length
+      if(reloadLength == null){
+        return true
+      }else if(reloadLength == 0 && canReload[0] == 1){
+        return true
+      }else if(reloadLength == 1 && canReload[0] == 1 && canReload[1] == 1){
+        return true
+      }
+
       siteDetails.update({_id: 'recruiting'}, {$set:{dnB: specStatus[0], dnU: specStatus[1], dnF: specStatus[2], dhH: specStatus[3], dhV: specStatus[4], drB: specStatus[5], drF: specStatus[6], drR: specStatus[7], drG: specStatus[8], huM: specStatus[9], huS: specStatus[10], huB: specStatus[11], maF: specStatus[12], maFr: specStatus[13], maA: specStatus[14], moM: specStatus[15], moW: specStatus[16], moB: specStatus[17], paH: specStatus[18], paR: specStatus[19], paP: specStatus[20], prS: specStatus[21], prD: specStatus[22], prH: specStatus[23], roA: specStatus[24], roS: specStatus[25], roC: specStatus[26], shE: specStatus[27], shR: specStatus[28], shEn: specStatus[29], waA: specStatus[30], waD: specStatus[31], waDe: specStatus[32], warA: specStatus[33], warF: specStatus[34], warP: specStatus[35]}})
-
 
       if(title != "" && title != undefined && title != null){
         siteDetails.update({_id:'title'}, {$set:{title: title}})
@@ -123,21 +173,57 @@ Meteor.methods({
       }
     }
   },
-  'updateRaid': (title, normS, heroS, mythS, bossName, bossStatN, bossStatH, bossStatM, addCC, target)=>{
+  'updateRaid': (title, bossName, bossStatN, bossStatH, bossStatM, addCE, target)=>{
     if(Meteor.user()){
-      raids.update({_id:target}, {$set:{title: title, normS: normS, heroS:heroS, mythS:mythS, bossName:bossName, bossStatN:bossStatN, bossStatH:bossStatH, bossStatM:bossStatM, length: addCC}})
+      console.log(addCE)
+      raids.update({_id:target}, {$set:{title: title, bossName:bossName, bossStatN:bossStatN, bossStatH:bossStatH, bossStatM:bossStatM, length: addCE}})
     }
   },
-  'updatePost': (title, content, id) =>{
+  'updatePost': (title, content, id, imageData, cata) =>{
     if(Meteor.user()){
-      posts.update({_id: id}, {$set: {title: title, content:content}})
+      // our data URL string from canvas.toDataUrl();
+      if(imageData != ''){
+        var imageDataUrl = imageData;
+        // declare a regexp to match the non base64 first characters
+        var dataUrlRegExp = /^data:image\/\w+;base64,/;
+        // remove the "header" of the data URL via the regexp
+        var base64Data = imageDataUrl.replace(dataUrlRegExp, "");
+        // declare a binary buffer to hold decoded base64 data
+        var imageBuffer = new Buffer(base64Data, "base64");
+        var path = process.env["PWD"] + '/.static~/';
+      }
+      if(cata == 'Boss Fight'){
+        cata = "Boss"
+      }
+      posts.update({_id: id}, {$set: {title: title, content:content, cataSux:cata}})
+      if(cata == "News"){
+        images.remove({_id: id})
+      }else if(cata == "Boss"){
+        var thisDate = posts.findOne({_id: id}).date_created
+        if(images.findOne({_id: id})){
+          //do something
+        }else{
+          var imagePath = posts.findOne({_id:id}).imgPath
+          images.insert({_id:id, date_created:thisDate, imgPath: imagePath})
+        }
+      }
+      var canReload = false
+      fs.writeFile(path+id+'.jpeg', imageBuffer,
+      function (err) {
+        if (err) throw err;
+        console.log('Done!');
+        canReload = true
+      })
+      if(canReload == true){
+        return true
+      }
     }
   }
 })
 
 Meteor.methods({
   'sendApp': (questions, resps, amt) =>{
-    apps.insert({username: resps[0].replace("::", ""), questions: questions, resps:resps, amt:amt})
+    apps.insert({username: resps[0].replace("::", ""), questions: questions, resps:resps, amt:amt, date: new Date()})
     counts.update({_id:"data"}, {$inc:{appCount: 1}})
   }
 })

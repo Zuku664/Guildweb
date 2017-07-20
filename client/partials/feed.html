@@ -3,6 +3,7 @@
     <div class="content">
       <!-- blaze templates, equals and currentPage defined in js/helpers.js-->
       {{#if equals currentPage "feed"}}
+      {{#if bossExists}}
       <div class="homeGallery">
         <img src="{{caroImg}}"/>
         <div class="thumbs">
@@ -16,12 +17,9 @@
           {{/each}}
         </div>
       </div>
-      {{> news}}
       {{/if}}
-      <!-- if the page is news, load this instead -->
-      {{#if equals currentPage "news"}}
       {{>newsHeader}}
-      {{>news}}
+      {{> news}}
       {{/if}}
       {{#if equals currentPage "article"}}
       {{>newsHeader}}

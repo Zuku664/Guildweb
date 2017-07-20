@@ -5,7 +5,7 @@ Meteor.subscribe('posts');
 Meteor.subscribe('raids');
 Meteor.subscribe('questions');
 Meteor.subscribe('apps');
-Meteor.subscribe('siteDetails');
+Deps.autorun( function(){Meteor.subscribe('siteDetails')});
 Meteor.subscribe('counts');
 Meteor.subscribe("images");
 
@@ -85,9 +85,6 @@ Meteor.addBoss = ({
   },
   'postBoss': () =>{
     let title = $('.postTitle').val()
-    let normS = $('.bcMain').val()
-    let heroS = $('.bcHero').val()
-    let mythS = $('.bcMyth').val()
     let bossName = []
     let bossStatN = []
     let bossStatH = []
@@ -114,16 +111,21 @@ Meteor.addBoss = ({
         bossStatM.push('ALIVE')
       }
     }
-    Meteor.call('addRaid', title, normS, heroS, mythS, bossName, bossStatN, bossStatH, bossStatM, addCC)
+    Meteor.call('addRaid', title, bossName, bossStatN, bossStatH, bossStatM, addCC)
     location.reload();
   }
 })
 
 var addCE = 0 - 1
+var sendCE = 0
 Meteor.editBoss = ({
   'addBoss': (target) =>{
-    addCE += target
+    if(target >= 0){
+      addCE += target
+      sendCE = addCE + 1
+    }
     addCE += 1
+    sendCE += 1
     let bossCon = '"editBossCon'+addCE+'"'
     let thisAbn = '"editAbn'+addCE+'"'
     let thisAbsN = '"editAbsN'+addCE+'"'
@@ -142,27 +144,27 @@ Meteor.editBoss = ({
     </tr> \
     </table></div>')
     addCE -= target
+    console.log('this is sendCE in add'+sendCE)
   },
   'remBoss' : (target) =>{
     addCE += target
     let bossCon = '#editBossCon'+addCE
     $( bossCon ).remove();
+    sendCE = addCE
     addCE -= target + 1
   },
   'postBoss': (target, num) =>{
     let title = $('#editBossTitle').val()
-    let normS = $('#editBcMain').val()
-    let heroS = $('#editBcHero').val()
-    let mythS = $('#editBcMyth').val()
     let bossName = []
     let bossStatN = []
     let bossStatH = []
     let bossStatM = []
-
-    if(addCE <= 0){
+    if(addCE >= -1 && addCE >= sendCE - 1){
       count = num -1
+      console.log('were using num')
     }else{
-      count = addCE
+      count = sendCE - 1
+      console.log('were using sendCE')
     }
     for(var i = 0; i < count+1; i++){
       bossName.push($('#editAbn'+[i]).val()+"::")
@@ -185,8 +187,8 @@ Meteor.editBoss = ({
         bossStatM.push('ALIVE')
       }
     }
-
-    Meteor.call('updateRaid', title, normS, heroS, mythS, bossName, bossStatN, bossStatH, bossStatM, count, target)
+    console.log('this is what we are sending to server' + count)
+    Meteor.call('updateRaid', title, bossName, bossStatN, bossStatH, bossStatM, count, target)
     location.reload();
   }
 })

@@ -56,119 +56,147 @@ Template.applyPage.events({
   }
 })
 
+function addImageUp(target, target2, target3){
+  //get image, resizes image in canvas then converts to base64 and sends to the server
+  // the server then inserts it into the public directory with an id of the post._id
+  // and serves it to the client on request
+  var input = document.getElementById(target3);
+  input.addEventListener('change', handleFiles);
+
+  var canvas = document.getElementById(target);
+  var ctx = canvas.getContext("2d");
+
+  function handleFiles(e) {
+    var ctx = document.getElementById(target).getContext('2d');
+    var img = new Image;
+    //CREATES new image from selected file
+    img.src = URL.createObjectURL(e.target.files[0]);
+    //when its loaded do this
+    img.onload = function() {
+      canvas.height = img.height
+      canvas.width = img.width
+      /// step 1
+      var oc = document.createElement('canvas'),
+      octx = oc.getContext('2d');
+
+      oc.width = img.width
+      oc.height = img.height
+      octx.drawImage(img, 0, 0, oc.width, oc.height);
+
+      /// step 2
+      octx.drawImage(oc, 0, 0, oc.width, oc.height);
+
+      ctx.drawImage(oc, 0, 0, oc.width, oc.height,0, 0, canvas.width, canvas.height);
+
+      var jpegUrl = canvas.toDataURL("image/jpeg");
+      $(target2).val(jpegUrl)
+    }
+  }
+}
+
 Template.newPost.events({
   'click .upload': () =>{
-    //get image, resizes image in canvas then converts to base64 and sends to the server
-    // the server then inserts it into the public directory with an id of the post._id
-    // and serves it to the client on request
-    var input = document.getElementById('input');
-    input.addEventListener('change', handleFiles);
-
-    var canvas = document.getElementById("canvas");
-    var ctx = canvas.getContext("2d");
-
-    function handleFiles(e) {
-      var ctx = document.getElementById('canvas').getContext('2d');
-      var img = new Image;
-      //CREATES new image from selected file
-      img.src = URL.createObjectURL(e.target.files[0]);
-      //when its loaded do this
-      img.onload = function() {
-        //modify the cancas
-        canvas.height = canvas.width * (img.height / img.width) * 3;
-        canvas.width = canvas.width * 3
-        /// step 1
-        var oc = document.createElement('canvas'),
-        octx = oc.getContext('2d');
-
-        oc.width = img.width * 0.5;
-        oc.height = img.height * 0.5;
-        octx.drawImage(img, 0, 0, oc.width, oc.height);
-
-        /// step 2
-        octx.drawImage(oc, 0, 0, oc.width * 0.5, oc.height * 0.5);
-
-        ctx.drawImage(oc, 0, 0, oc.width * 0.5, oc.height * 0.5,
-          0, 0, canvas.width, canvas.height);
-
-          //convert the canvas to base64 canvas
-          var jpegUrl = canvas.toDataURL("image/jpeg");
-          $('#imageData').val(jpegUrl)
-        }
-      }
-    },
-    'click #post': () =>{
-      var imageData = $('#imageData').val()
-      var title = $('#title').val()
-      var content = $('.content').val()
-      var cata = $('.flair').html()
-      //if nothing is selected
-      if(!cata){
-        //default to news
-        cata = "News"
-      }
-      Meteor.call('post', imageData, title, content, cata, function(err, result){
-        if(!err){
-          location.reload();
-        }
-      })
-      $('#post').prop('disabled', true);
-
+    addImageUp('canvas', '#imageData', 'input')
+  },
+  'click #post': () =>{
+    var imageData = $('#imageData').val()
+    var title = $('#title').val()
+    var content = $('.content').val()
+    var cata = $('.flair').html()
+    //if nothing is selected
+    if(!cata){
+      //default to news
+      cata = "News"
     }
-  })
-
-  Template.editPost.events({
-    'click #editPost': ()=>{
-      var title = $('#editTitle').val()
-      var content = $('#editContent').val()
-      var id = currentPost.get()
-      Meteor.call('updatePost', title, content, id)
-      location.reload();
-    }
-  })
-
-  Template.modals.events({
-    'click .delY': ()=>{
-      var type = deleting.get()
-      type = type.split('::')
-      var id = type[1]
-      type = type[0]
-
-      if(type == "post"){
-        Meteor.call('deletePost', id)
-      }else if(type == 'raid'){
-        Meteor.call('deleteRaid', id)
-      }else{
-        Meteor.call('deleteApp', id)
+    $('#post').prop('disabled', true);
+    Meteor.call('post', imageData, title, content, cata, function(err, result){
+      if(!err){
+        location.reload();
       }
-      deleting.set('')
-      $('.deleteModal').hide()
-    },
-    'click .delN': ()=>{
-      deleting.set('')
-      $('.deleteModal').hide()
-    }
-  })
+    })
+  }
+})
 
-  Template.settings.events({
-    'click #post':()=>{
-      var specLength = 36;
-      var spec = ['dnB','dnU','dnF','dhH','dhV','drB','drF','drR','drG','huM','huS','huB','maF','maFr','maA','moM','moW','moB','paH','paR','paP','prS','prD','prH','roA','roS','roC','shE','shR','shEn','waA','waD','waDe','warA','warF','warP']
-      //'''
-      var specStatus = []
-      for(var i = 0; i < specLength; i++){
-        specStatus.push($('#'+spec[i]).prop('checked'));
+Template.editPost.events({
+  'click .upload': () =>{
+    addImageUp('canvas2', '#imageData2', 'input')
+  },
+  'click #editPost': ()=>{
+    var imageData = $('#imageData2').val()
+    var title = $('#editTitle').val()
+    var content = $('#editContent').val()
+    var id = currentPost.get()
+    var cata = $('.flair').html()
+    $('#editPost').prop('disabled', true);
+    Meteor.call('updatePost', title, content, id, imageData, cata, function(err, resp){
+      if(!err){
+        console.log('should reload')
+        location.reload();
       }
+    })
+  }
+})
 
-      var title = $('.postTitle').val();
-      var about = $('.content').val()
-
-      Meteor.call('updateSite', specStatus, title, about)
-      location.reload();
+Template.settings.events({
+  'click #tabardIn':()=>{
+    addImageUp('tabardCan', '#tabardUp', 'tabardIn')
+  },
+  'click #backgroundIn':()=>{
+    addImageUp('backgroundCan', '#backgroundUp', 'backgroundIn')
+  },
+  'click #saveSettings':()=>{
+    var specLength = 36;
+    var spec = ['dnB','dnU','dnF','dhH','dhV','drB','drF','drR','drG','huM','huS','huB','maF','maFr','maA','moM','moW','moB','paH','paR','paP','prS','prD','prH','roA','roS','roC','shE','shR','shEn','waA','waD','waDe','warA','warF','warP']
+    //'''
+    var specStatus = []
+    for(var i = 0; i < specLength; i++){
+      specStatus.push($('#'+spec[i]).prop('checked'));
     }
-  });
 
-  Template.login.events({
+    var title = $('.postTitle').val();
+    var about = $('.content').val()
+    var tabard = ''
+    var background = ''
+
+    if($('#tabardUp').val() != ''){
+      tabard = $('#tabardUp').val()
+    }
+    if($('#backgroundUp').val() != ''){
+      background = $('#backgroundUp').val()
+    }
+
+    Meteor.call('updateSite', specStatus, title, about, tabard, background, function(err, res){
+      if(!err){
+        location.reload();
+      }
+    })
+  }
+});
+
+Template.modals.events({
+  'click .delY': ()=>{
+    var type = deleting.get()
+    type = type.split('::')
+    var id = type[1]
+    type = type[0]
+
+    if(type == "post"){
+      Meteor.call('deletePost', id)
+    }else if(type == 'raid'){
+      Meteor.call('deleteRaid', id)
+    }else{
+      Meteor.call('deleteApp', id)
+    }
+    deleting.set('')
+    $('.deleteModal').hide()
+  },
+  'click .delN': ()=>{
+    deleting.set('')
+    $('.deleteModal').hide()
+  }
+})
+
+Template.login.events({
   "click .loginBttn" : () =>{
     var usm = $(".username").val();
     var psw = $('.password').val();

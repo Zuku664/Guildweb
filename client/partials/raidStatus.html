@@ -28,9 +28,9 @@
           <tbody id="{{_id}}">
             <tr>
               <td class="title">{{title}}</td>
-              <td class="size">{{normS}} NORMAL</td>
-              <td class="size">{{heroS}} HEROIC</td>
-              <td class="size">{{mythS}} MYTHIC</td>
+              <td class="size">NORMAL</td>
+              <td class="size">HEROIC</td>
+              <td class="size">MYTHIC</td>
             </tr>
             <!-- dynamically add parts here -->
           </tbody>
@@ -97,6 +97,16 @@
 
     $('#{{_id}}mythPer').html("mythic " + Math.round(mythPer / amt * 100) + "%")
     $('#{{_id}}mythMask').attr("style", "width:" + Math.round(mythPer / amt * 100) + "%")
+
+    if(Math.round(normPer / amt * 100) == 100){
+      $('#{{_id}}normMask').attr("style", "background: green; width:" + Math.round(normPer / amt * 100) + "%")
+    }
+    if(Math.round(heroPer / amt * 100) == 100){
+      $('#{{_id}}heroMask').attr("style", "background: green; width:" + Math.round(heroPer / amt * 100) + "%")
+    }
+    if(Math.round(mythPer / amt * 100) == 100){
+      $('#{{_id}}mythMask').attr("style", "background: green; width:" + Math.round(mythPer / amt * 100) + "%")
+    }
 
     </script>
   </div>
