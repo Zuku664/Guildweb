@@ -6,6 +6,7 @@
     <div class="fa fa-pencil new" title="New Post"></div>
     <div class="fa fa-trophy" title="Raids"></div>
     <div class="fa fa-file" title="Check Applications"></div>
+    <div class="fa fa-twitch" title="Twitch"></div>
     <div class="fa fa-cog" title="Site Settings"></div>
   </div>
   <div class="adminRight">
@@ -52,6 +53,9 @@
       {{#if equals adminLoc "editRaid"}}
       Edit Raid
       {{/if}}
+      {{#if equals adminLoc "twitch"}}
+      Twitch Settings
+      {{/if}}
     </div>
     {{#if equals adminLoc "dash"}}
     {{#each amount}}
@@ -82,6 +86,13 @@
       </div>
       <div id="center" class="loc">Applications</div>
       <div id="bottom" style="background:#00974e">
+        See More
+      </div>
+    </div>
+    <div class="dashShort" style="background:#4b367c" onclick="adminLoc.set('twitch')">
+      <div id="center" class="loc fa fa-twitch" style="padding-top:23px!important;"></div>
+      <div id="center" class="loc">Twitch</div>
+      <div id="bottom" style="background:#3c2c63">
         See More
       </div>
     </div>
@@ -124,6 +135,9 @@
     {{/if}}
     {{#if equals adminLoc "editRaid"}}
     {{>editRaid}}
+    {{/if}}
+    {{#if equals adminLoc "twitch"}}
+    {{>twitch}}
     {{/if}}
   </div>
 </template>

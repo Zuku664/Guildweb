@@ -597,6 +597,7 @@ body{
         display: inline-block;
         font-family: $font-ops;
         @include border-radius(4px);
+        border-bottom:1px solid #f0f0f0;
         div{
           padding:8px 10px 8px 10px;
           float: left;
@@ -858,6 +859,65 @@ body{
       background-color: #983e0b;
     }
   }
+
+  .streamBanner{
+    width:100%;
+    @include border-radius(4px);
+  }
+  .twitch-widget {
+    background: #111;
+    @include border-radius(4px);
+    color: #fff;
+    margin: 25px 0;
+    margin-top:0;
+    padding: 10px;
+    border:1px solid #222222;
+    display: inline-block;
+    width: calc(100% - 20px);
+    line-height: 50px;
+    font-family: $font-ops;
+  }
+  .streamLogo{
+    width:50px;
+    height:50px;
+    float:left;
+    margin-right:10px;
+    display: inline-block;
+    @include border-radius(50%);
+  }
+  .onlineStream{
+    border: 2px solid green;
+  }
+  .online, .offline {
+    border-radius: 5px;
+    display: inline-block;
+    height: 10px;
+    width: 10px;
+  }
+
+  .online {
+    background: green;
+  }
+
+  .offline {
+    background: red;
+  }
+
+  .videoWrapper {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 */
+    padding-top: 25px;
+    height: 0;
+  }
+  .videoWrapper iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border:none;
+  }
+
 }
 
 
@@ -930,6 +990,9 @@ body{
     img{
       width: 100%;
       display: block;
+      max-width: 694px;
+      max-height: 390.375px;
+      object-fit: cover;
     }
     .thumbs{
       width: 100%;

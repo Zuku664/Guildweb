@@ -8,6 +8,7 @@ Meteor.subscribe('apps');
 Deps.autorun( function(){Meteor.subscribe('siteDetails')});
 Meteor.subscribe('counts');
 Meteor.subscribe("images");
+Meteor.subscribe("twitch");
 
 var currentFilter = 0;
 Meteor.newsFilter =({
@@ -144,7 +145,6 @@ Meteor.editBoss = ({
     </tr> \
     </table></div>')
     addCE -= target
-    console.log('this is sendCE in add'+sendCE)
   },
   'remBoss' : (target) =>{
     addCE += target
@@ -161,10 +161,8 @@ Meteor.editBoss = ({
     let bossStatM = []
     if(addCE >= -1 && addCE >= sendCE - 1){
       count = num -1
-      console.log('were using num')
     }else{
       count = sendCE - 1
-      console.log('were using sendCE')
     }
     for(var i = 0; i < count+1; i++){
       bossName.push($('#editAbn'+[i]).val()+"::")
@@ -187,16 +185,57 @@ Meteor.editBoss = ({
         bossStatM.push('ALIVE')
       }
     }
-    console.log('this is what we are sending to server' + count)
     Meteor.call('updateRaid', title, bossName, bossStatN, bossStatH, bossStatM, count, target)
     location.reload();
   }
 })
 
+
+var addTU = 0 - 1
+var sendTU = 0
+Meteor.twitch = ({
+  'addUsr': (target) =>{
+    if(target >= 0){
+      addTU += target
+      sendTU = addTU + 1
+    }
+    addTU += 1
+    sendTU += 1
+    let twitchCon = '"twitchCon'+addTU+'"'
+    let thisAbn = '"editTu'+addTU+'"'
+
+    $('#twitchCon').append('<div class="bosses" id='+twitchCon+'><input class="bossName" placeholder="Username" id='+thisAbn+'/> </div>')
+    addTU -= target
+  },
+  'remUsr' : (target) =>{
+    addTU += target
+    let bossCon = '#twitchCon'+addTU
+    $( bossCon ).remove();
+    sendTU = addTU
+    addTU -= target + 1
+  },
+  'postTwitch': (num) =>{
+    let apiKey = $('#APIkey').val()
+    let twitchName = []
+
+    if(addTU >= -1 && addTU >= sendTU - 1){
+      count = num -1
+    }else{
+      count = sendTU - 1
+    }
+    for(var i = 0; i < count+1; i++){
+      twitchName.push($('#editTu'+[i]).val())
+    }
+    Meteor.call('updateTwitch', apiKey, twitchName, count)
+    location.reload();
+  }
+})
+
+
 Meteor.pushState ={
   pushState:(target) =>{
     window.history.pushState("object or string", "Title", "/"+window.location.href.substring(window.location.href.lastIndexOf('/') + 1));
-    if(target == 'feed' || target == 'news' || target == 'apply' || target == 'about'){
+    if(target == 'feed' || target == 'streams' || target == 'apply' || target == 'about'){
       history.pushState('', document.title, target);
     }
     else{

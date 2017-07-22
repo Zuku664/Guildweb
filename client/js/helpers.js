@@ -96,6 +96,17 @@ Template.editRaid.helpers({
   }
 })
 
+Template.twitch.helpers({
+  'daStuff': ()=>{
+    return twitch.find({_id: 'data'})
+  }
+})
+Template.streams.helpers({
+  'daRules': ()=>{
+    return twitch.find({_id:'data'})
+  }
+})
+
 Template.article.helpers({
   posts : () =>{
     if(currentPage.get() == 'article'){

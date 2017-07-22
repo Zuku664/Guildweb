@@ -175,7 +175,9 @@ Meteor.methods({
   },
   'updateRaid': (title, bossName, bossStatN, bossStatH, bossStatM, addCE, target)=>{
     if(Meteor.user()){
-      console.log(addCE)
+      if(addCE < 0){
+        addCE = 0
+      }
       raids.update({_id:target}, {$set:{title: title, bossName:bossName, bossStatN:bossStatN, bossStatH:bossStatH, bossStatM:bossStatM, length: addCE}})
     }
   },
@@ -191,11 +193,16 @@ Meteor.methods({
         // declare a binary buffer to hold decoded base64 data
         var imageBuffer = new Buffer(base64Data, "base64");
         var path = process.env["PWD"] + '/.static~/';
+        posts.update({_id: id}, {$set: {imgPath: '/files/' + id+".jpeg"}})
+        //if we find an image with our ID
+        if(images.findOne({_id:id})){
+          //update it
+          images.update({_id:id}, {$set:{imgPath:  '/files/' + id+".jpeg"}})
+        }
       }
       if(cata == 'Boss Fight'){
         cata = "Boss"
       }
-      posts.update({_id: id}, {$set: {title: title, content:content, cataSux:cata}})
       if(cata == "News"){
         images.remove({_id: id})
       }else if(cata == "Boss"){
@@ -207,6 +214,12 @@ Meteor.methods({
           images.insert({_id:id, date_created:thisDate, imgPath: imagePath})
         }
       }
+      console.log(cata)
+      if(cata != null){
+        posts.update({_id: id}, {$set: {title: title, content:content, cataSux:cata}})
+      }else{
+        posts.update({_id: id}, {$set: {title: title, content:content}})
+      }
       var canReload = false
       fs.writeFile(path+id+'.jpeg', imageBuffer,
       function (err) {
@@ -216,6 +229,20 @@ Meteor.methods({
       })
       if(canReload == true){
         return true
+      }
+    }
+  },
+  'updateTwitch': (apiKey, names, counts)=>{
+    if(Meteor.user()){
+      if(counts < 0){
+        counts = 0
+      }
+      if(twitch.findOne({_id: 'data'})){
+        twitch.update({_id:'data'}, {$set:{apiKey: apiKey, names:names, counts:counts}})
+        console.log('updating')
+      }else{
+        twitch.insert({_id: "data", apiKey: apiKey, names:names, counts:counts})
+        console.log('inserting')
       }
     }
   }

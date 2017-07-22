@@ -10,10 +10,9 @@ Template.nav.events({
     currentPage.set("about")
     Meteor.pushState.pushState('about')
   },
-  'click #news': () =>{
-    currentPage.set("news")
-    newsFilter.set("News")
-    Meteor.pushState.pushState('news')
+  'click #streams': () =>{
+    currentPage.set("streams")
+    Meteor.pushState.pushState('streams')
   },
   'click #apply': () =>{
     currentPage.set("apply")
@@ -39,6 +38,9 @@ Template.admin.events({
   },
   'click .fa-trophy': ()=>{
     adminLoc.set('raids');
+  },
+  'click .fa-twitch': ()=>{
+    adminLoc.set('twitch');
   }
 })
 
@@ -130,7 +132,6 @@ Template.editPost.events({
     $('#editPost').prop('disabled', true);
     Meteor.call('updatePost', title, content, id, imageData, cata, function(err, resp){
       if(!err){
-        console.log('should reload')
         location.reload();
       }
     })

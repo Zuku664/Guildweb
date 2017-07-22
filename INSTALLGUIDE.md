@@ -3,10 +3,11 @@
 ### Table of Contents
 1. [Introduction](#introduction)
 2. [Requirements](#requirements)
-3. [Auto installtion Via Install script](#auto)
-4. [Manual Installation](#manual)
-5. [First time Login](#login)
-6. [URL's tk know](#url)
+3. [Updating](#updating)
+4. [Auto installtion Via Install script](#auto)
+5. [Manual Installation](#manual)
+6. [First time Login](#login)
+7. [URL's to know](#url)
 
 <a name="introduction"></a>
 ### Introduction
@@ -16,6 +17,27 @@ If you find any bugs, you can open a a new issue on this projects GitHub!
 <a name="requirements"></a>
 ### Requirements
 - Ubuntu 14
+
+<a name="updating"></a>
+### Updating
+To update, copy the new tarball (.tar.gz file) into your VPS home/YOURAPPNAME directory. On linux this can be done via
+```
+scp openGuild-CMS.tar.gz root@YOUR_IP_ADDRESS:/home/YOURAPPNAME
+```
+SSH into your VPS
+```
+ssh root@YOUR_IP_ADDRESS
+```
+Extract the new tarball
+```
+tar -zxf openGuild-CMS.tar.gz
+```
+Stop and Start your app 
+```
+stop YOURAPPNAME
+start YOURAPPNAME
+```
+You now are running the latest build!
 
 <a name="auto"></a>
 ### Auto installtion

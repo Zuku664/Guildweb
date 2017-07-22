@@ -12,6 +12,10 @@ Meteor.publish("raids", function(){
   return raids.find({}, {sort:{date: -1}});
 });
 
+Meteor.publish("twitch", function(){
+  return twitch.find({});
+});
+
 Meteor.publish("questions", function(){
   return questions.find({});
 });

@@ -92,12 +92,19 @@
     $('#{{_id}}normPer').html("normal " + Math.round(normPer / amt * 100) + "%")
     $('#{{_id}}normMask').attr("style", "width:" + Math.round(normPer / amt * 100) + "%")
 
-    $('#{{_id}}heroPer').html("heroic " + Math.round(heroPer / amt * 100) + "%")
-    $('#{{_id}}heroMask').attr("style", "width:" + Math.round(heroPer / amt * 100) + "%")
+    if(Math.round(heroPer / amt * 100) >0){
+      $('#{{_id}}heroPer').html("heroic " + Math.round(heroPer / amt * 100) + "%")
+      $('#{{_id}}heroMask').attr("style", "width:" + Math.round(heroPer / amt * 100) + "%")
+    }else{
+      $('#{{_id}}heroPer').parent().hide()
+    }
 
-    $('#{{_id}}mythPer').html("mythic " + Math.round(mythPer / amt * 100) + "%")
-    $('#{{_id}}mythMask').attr("style", "width:" + Math.round(mythPer / amt * 100) + "%")
-
+    if(Math.round(mythPer / amt * 100) >0){
+      $('#{{_id}}mythPer').html("mythic " + Math.round(mythPer / amt * 100) + "%")
+      $('#{{_id}}mythMask').attr("style", "width:" + Math.round(mythPer / amt * 100) + "%")
+    }else{
+      $('#{{_id}}mythMask').parent().hide()
+    }
     if(Math.round(normPer / amt * 100) == 100){
       $('#{{_id}}normMask').attr("style", "background: green; width:" + Math.round(normPer / amt * 100) + "%")
     }

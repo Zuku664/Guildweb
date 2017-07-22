@@ -61,9 +61,6 @@
     <script>
     //get the data and parse it
      var title = "{{title}}"
-     var normS = "{{normS}}"
-     var heroS = "{{heroS}}"
-     var mythS = "{{mythS}}"
 
      var bossName = "{{bossName}}"
      bossName = bossName.split("::,")
@@ -79,11 +76,6 @@
      console.log(count)
      //stick the data into the tempalte
      $('#editBossTitle').val(title)
-
-     //sizes
-     $('#editBcMain').val(normS)
-     $('#editBcHero').val(heroS)
-     $('#editBcMyth').val(mythS)
 
      //the main loop for populating the bosses
      for(var i = 0; i < count; i++){
