@@ -30,6 +30,7 @@ ssh root@YOUR_IP_ADDRESS
 ```
 Extract the new tarball
 ```
+cd /home/YOURAPPNAME
 tar -zxf openGuild-CMS.tar.gz
 ```
 Stop and Start your app 
@@ -81,17 +82,9 @@ You'll want to update your known repo list to pull some required apps from the w
 ```
 sudo apt-get update
 ```
-Install nano
+Install nano curl and npm
 ```
-sudo apt-get install nano
-```
-Install Curl
-```
-sudo apt-get install curl
-```
-Install NPM
-```
-sudo apt-get install npm
+sudo apt-get install nano curl npm
 ```
 Install NVM 
 ```

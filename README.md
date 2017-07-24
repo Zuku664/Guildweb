@@ -7,11 +7,12 @@ An opensource Guild CMS system for WoW.
  - Track Raids
  - Show who you're recruiting
 
-![homepage](http://i.imgur.com/cp1kncO.jpg)
+![homepage](http://i.imgur.com/1tKJI6O.jpg)
 
 
 ### Installation
 [Install Directions can be found here](INSTALLGUIDE.md)
+
 The server tarball and install.sh script can be found in [binary/](binary/) 
 
 
