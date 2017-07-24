@@ -2,6 +2,40 @@ Meteor.startup(function () {
   fs = Npm.require('fs');
 })
 
+//Meteor SEO SSR
+const SeoRouter = Picker.filter((request, response) => {
+  let botAgents = [
+    /^facebookexternalhit/i, // Facebook
+    /^linkedinbot/i, // LinkedIn
+    /^twitterbot/i, // Twitter
+    /^slackbot-linkexpanding/i, // Slack
+    /^googlebot/i
+  ]
+
+  return /_escaped_fragment_/.test(request.url) || botAgents.some(i => i.test(request.headers['user-agent']))
+})
+
+SeoRouter.route('/', (params, request, response) => {
+  SSR.compileTemplate('index', Assets.getText('index.html'))
+  Template.index.helpers({
+    getDocType: function() {
+      return "<!DOCTYPE html>";
+    },
+    title: function(){
+      return siteDetails.findOne({_id: "title"}).title
+    },
+    meta: function(){
+      return siteDetails.findOne({_id: "about"}).about
+    }
+  });
+
+  let html = SSR.render('index')
+
+  response.setHeader('Content-Type', 'text/html;charset=utf-8');
+  response.end(html)
+})
+
+//END
 
 //checks to see if default site values are set, creates template for later
 var needed = ['title', 'about', 'tabard', 'background', 'favicon', 'recruiting']
@@ -139,6 +173,7 @@ Meteor.methods({
       }
       var path = process.env["PWD"] + '/.static~/';
       for(var i = 0; i < images.length; i++){
+        console.log(images[i])
         // our data URL string from canvas.toDataUrl();
         var imageDataUrl = eval(images[i]);
         // declare a regexp to match the non base64 first characters

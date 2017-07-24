@@ -41,4 +41,6 @@ mantarayar:shortid
 #markdown
 rexzh0u:kramed
 
-vsivsi:file-collection
+# Server side Rendering
+meteorhacks:ssr
+meteorhacks:picker
