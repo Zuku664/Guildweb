@@ -39,10 +39,12 @@ Meteor.methods({
     }
   },
   'createAcc': (usm, psw) =>{
-    Accounts.createUser({
-      username: usm,
-      password: psw
-    });
+    if(userCount.findOne({count:0})){
+      Accounts.createUser({
+        username: usm,
+        password: psw
+      });
+    }
     userCount.insert({count: 1});
     userCount.remove({count: 0});
   }

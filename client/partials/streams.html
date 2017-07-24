@@ -1,29 +1,1 @@
-<template name="streams">
-  {{>newsHeader}}
-  <div class="streamOBJ">
-
-  </div>
-  {{#each daRules}}
-  <script>
-  (function() {
-    var user_name = '{{names}}';
-    user_name = user_name.split(',')
-    var api_key = "{{apiKey}}";
-
-    for(var i = 0; i < user_name.length; i++){
-      var user = user_name[i]
-      $.getJSON('https://api.twitch.tv/kraken/streams/' + user + '?client_id=' + api_key + '&callback=?', function(data) {
-        if (data.stream) {
-          $('.streamOBJ').append("<div class='videoWrapper'> <iframe class='streamVid' src='http://player.twitch.tv/?autoplay=false&channel="+data.stream.channel.name+"' allowfullscreen='true'> </iframe></div>")
-          $('.streamOBJ').append("<div class='twitch-widget' id='twitch-widget'><img class='streamLogo' src='"+data.stream.channel.logo+"' /><span class='online'></span>&nbsp;&nbsp; "+ data.stream.game+"</div>")
-        } else {
-          $.getJSON('https://api.twitch.tv/kraken/channels/' + user + '?client_id=' + api_key + '&callback=?', function(data) {
-            $('.streamOBJ').append("<div class='twitch-widget' id='twitch-widget'><img class='streamLogo' src='"+data.logo+"' /><span class='offline'></span>&nbsp;&nbsp;Offline")
-          });
-        }
-      });
-    }
-  })();
-  </script>
-  {{/each}}
-</template>
+<template name="streams">	{{>newsHeader}}	<div class="streamOBJ">	</div>	{{#each daRules}}	<script>	var usernames = '{{names}}';	usernames = usernames.split(',')	let cb = '?client_id={{apiKey}}&callback=?';	let url = "https://api.twitch.tv/kraken/";	// Loop for each username	usernames.forEach(function(channel) {		function makeURL(type, name) {			return url + type + "/" + name + cb;		};		$.getJSON(makeURL("streams", channel), function(data) {			let game,			status;			if(data.stream === null) {				game = "Offline";				status = "offline";			} else {				game = data.stream.game;				status = "online";			};			$.getJSON(makeURL("channels", channel), function(data) {				if(status == 'offline'){					$('.streamOBJ').append("<div class='twitch-widget' id='twitch-widget'><img class='streamLogo' src='"+data.logo+"' /><span class='offline'></span>&nbsp;&nbsp;Offline")				}else{					$('.streamOBJ').append("<div class='videoWrapper'> <iframe class='streamVid' src='http://player.twitch.tv/?autoplay=false&channel="+data.name+"' allowfullscreen='true'> </iframe></div>")					$('.streamOBJ').append("<div class='twitch-widget' id='twitch-widget'><img class='streamLogo' src='"+data.logo+"' /><span class='online'></span>&nbsp;&nbsp; "+ data.name+ ' is playing '+game+"</div>")				}			});		});	});	</script>	{{/each}}</template>
