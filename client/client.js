@@ -204,7 +204,7 @@ Meteor.twitch = ({
     let twitchCon = '"twitchCon'+addTU+'"'
     let thisAbn = '"editTu'+addTU+'"'
 
-    $('#twitchCon').append('<div class="bosses" id='+twitchCon+'><input class="bossName" placeholder="Username" id='+thisAbn+'/> </div>')
+    $('#twitchCon').append('<div class="bosses" id='+twitchCon+'><input class="twitchName" placeholder="Username" id='+thisAbn+'/> </div>')
     addTU -= target
   },
   'remUsr' : (target) =>{

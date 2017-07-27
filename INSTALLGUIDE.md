@@ -210,7 +210,7 @@ server {
         # on every applicaiton update the name of CSS and JS file is different, so they can be cache infinitely (here:$
         # the root path (/) MUST NOT be cached
         if ($uri != '/') {
-            expires 30d;
+            expires -1; # this means nothing is cached. If you want cache, change this to $NUMd; (so like 20d;)
         }
     }
 }
