@@ -29,13 +29,13 @@ Meteor.addQues = ({
   'addQues': () =>{
     if(addQU == 0){
       addQU += 1
-      firstQues = true
     }
-    let thisQues = '"qu'+addQU+'"'
+    var thisQues = '"qu'+addQU+'"'
     $('.questions').append('<input class="quesName" placeholder="Question" id='+thisQues+'</input>')
     if(firstQues == true){
       firstQues = false
     }else{
+      console.log('firing')
       addQU += 1
     }
   },
@@ -43,12 +43,15 @@ Meteor.addQues = ({
     var remNum = addQU - 1
     var ques = '#qu'+remNum
     $( ques ).remove();
-    addQU -= 1
+    if(addQU > 0){
+      addQU -= 1
+    }
   },
   'postQues': ()=>{
     let ques = []
     var test = addQU
     for(var i = 0; i < test; i++){
+      console.log($('#qu'+[i]).val()+"::")
       ques.push($('#qu'+[i]).val()+"::")
     }
     Meteor.call('addQues', ques, addQU)

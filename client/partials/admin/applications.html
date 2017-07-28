@@ -67,6 +67,10 @@
       addQU += 1
       console.log(addQU)
     }
+
+    if(amt == 0){
+      $('#quesCon0').append('<input class="quesName" placeholder="Question ( This should be username )" id="qu'+0+'">')
+    }
     </script>
     {{else}}
     <div id="quessCon">

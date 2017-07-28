@@ -1,6 +1,9 @@
 <template name="applyPage">
   <div class="apply">
     {{#if equals currentPage "apply"}}
+    <script>
+    var shouldShow = true;
+    </script>
     {{#each question}}
     <div class="quesCon">
     <script>
@@ -14,10 +17,19 @@
       $('.quesCon').append('<div class="quesTitle">'+ques[i]+'</div>')
       $('.quesCon').append('<input class="quesResp" placeholder="Response" id="qu'+i+'">')
     }
+
+    var first = $('<input class="quesResp" placeholder="Response" id="qu'+0+'">').val()
+    if(amt == 1 && first.length >= 1 ){
+      //do nothing
+    }else{
+      $('#qu0').hide()
+      $('#buttenrino').hide()
+      $('.quesCon').append('<div class="quesTitle">Looks like we are not accepting applications right now! Check back later!</div>')
+    }
     </script>
   </div>
   {{/each}}
-  <button>Apply</button>
+  <button id="buttenrino">Apply</button>
   {{/if}}
 </div>
 </template>
