@@ -2,6 +2,7 @@ BlazeLayout.setRoot('body');
 
 Deps.autorun( function(){Meteor.subscribe('posts', postLimitServer.get())});
 Meteor.subscribe('posts');
+Deps.autorun( function(){Meteor.subscribe('posts2', postFromSlug.get())});
 Meteor.subscribe('raids');
 Meteor.subscribe('questions');
 Meteor.subscribe('apps');

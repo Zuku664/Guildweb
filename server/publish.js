@@ -1,11 +1,11 @@
 Meteor.publish("posts", function(limit){
   var dl = limit || 7;
   //send data newest first to the client
-  if(!this.userId){
-    return posts.find({}, {sort:{date_created: -1}, limit: dl});
-  }else{
-    return posts.find({})
-  }
+  return posts.find({}, {sort:{date_created: -1}, limit: dl});
+});
+
+Meteor.publish("posts2", function(target){
+  return posts.find({_id: target})
 });
 
 Meteor.publish("raids", function(){
