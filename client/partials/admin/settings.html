@@ -3,10 +3,12 @@
     <span class="label" id="title">Site Title</span>
     <input class="postTitle" placeholder="{{st.title}}"/>
     <span class="label">About text</span>
+    {{>markdownBar}}
     <textarea class="content" placeholder="{{at.about}}"></textarea>
     <script>
+      var about = $('.content').attr('placeholder')
       $('.postTitle').val("{{st.title}}")
-      $('.content').val("{{at.about}}")
+      $('.content').val(about)
     </script>
     <!-- tabard upload
     <div class="label">Upload Tabard (The img tag size is 145x145 and object-fit)</div>

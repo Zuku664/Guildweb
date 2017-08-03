@@ -16,7 +16,7 @@
       {{/if}}
       {{#if equals adminLoc "post"}}
       Posts
-      <button class="createNew" onclick="adminLoc.set('newPost')">
+      <button class="createNew" onclick="adminLoc.set('newPost');">
         New Post
       </button>
       {{/if}}
@@ -28,7 +28,7 @@
       {{/if}}
       {{#if equals adminLoc "apps"}}
       Applications
-      <button class="createNew" onclick="adminLoc.set('appSet')">
+      <button class="createNew" onclick="adminLoc.set('appSet');">
         Questions
       </button>
       {{/if}}
@@ -43,7 +43,7 @@
       {{/if}}
       {{#if equals adminLoc "raids"}}
       Raids
-      <button class="createNew" onclick="adminLoc.set('newRaid')">
+      <button class="createNew" onclick="adminLoc.set('newRaid');">
         Add Raid
       </button>
       {{/if}}
@@ -60,7 +60,7 @@
     {{#if equals adminLoc "dash"}}
     {{#each amount}}
     <!-- the posts -->
-    <div class="dashShort" style="background:#f24232" onclick="adminLoc.set('post')">
+    <div class="dashShort" style="background:#f24232" onclick="adminLoc.set('post'); Meteor.adminAct.adminAct(1)">
       <div id="center">
         {{postCount}}
       </div>
@@ -70,7 +70,7 @@
       </div>
     </div>
     <!-- the raids -->
-    <div class="dashShort" style="background:#ff9800" onclick="adminLoc.set('raids')">
+    <div class="dashShort" style="background:#ff9800" onclick="adminLoc.set('raids'); Meteor.adminAct.adminAct(4)">
       <div id="center">
         {{raidCount}}
       </div>
@@ -80,7 +80,7 @@
       </div>
     </div>
     <!-- the applications -->
-    <div class="dashShort" style="background:#00a857" onclick="adminLoc.set('apps')">
+    <div class="dashShort" style="background:#00a857" onclick="adminLoc.set('apps'); Meteor.adminAct.adminAct(2)">
       <div id="center">
         {{appCount}}
       </div>
@@ -89,14 +89,14 @@
         See More
       </div>
     </div>
-    <div class="dashShort" style="background:#4b367c" onclick="adminLoc.set('twitch')">
+    <div class="dashShort" style="background:#4b367c" onclick="adminLoc.set('twitch'); Meteor.adminAct.adminAct(5)">
       <div id="center" class="loc fa fa-twitch" style="padding-top:23px!important;"></div>
       <div id="center" class="loc">Twitch</div>
       <div id="bottom" style="background:#3c2c63">
         See More
       </div>
     </div>
-    <div class="dashShort" style="background:#0073b9" onclick="adminLoc.set('settings')">
+    <div class="dashShort" style="background:#0073b9" onclick="adminLoc.set('settings'); Meteor.adminAct.adminAct(3)">
       <div id="center" class="loc fa fa-cog" style="padding-top:23px!important;"></div>
       <div id="center" class="loc">Settings</div>
       <div id="bottom" style="background:#0067a6">

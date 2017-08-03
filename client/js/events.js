@@ -1,3 +1,11 @@
+function setActive(target){
+  var bttns = ['#home', '#about', '#streams', '#apply']
+  for (var i = 0; i < bttns.length; i++){
+    $(bttns[i]).removeClass('activeBttn')
+  }
+  $(bttns[target]).addClass('activeBttn')
+}
+
 Template.nav.events({
   //on click Home in Nav
   'click #home': () => {
@@ -5,42 +13,65 @@ Template.nav.events({
     currentPage.set("feed")
     newsFilter.set("")
     Meteor.pushState.pushState('feed')
+    setActive(0)
   },
   'click #about': () =>{
     currentPage.set("about")
     Meteor.pushState.pushState('about')
+    setActive(1)
   },
   'click #streams': () =>{
     currentPage.set("streams")
     Meteor.pushState.pushState('streams')
+    setActive(2)
   },
   'click #apply': () =>{
     currentPage.set("apply")
     Meteor.pushState.pushState('apply')
+    setActive(3)
+  }
+})
+
+function setAdminActive(target){
+  var bttns = ['.fa-tachometer', '.new', '.fa-file', '.fa-cog', '.fa-trophy', '.fa-twitch']
+  for (var i = 0; i < bttns.length; i++){
+    $(bttns[i]).removeClass('activeAdmin')
+  }
+  $(bttns[target]).addClass('activeAdmin')
+}
+Meteor.adminAct = ({
+  adminAct: (target) =>{
+    setAdminActive(target)
   }
 })
 
 Template.admin.events({
   'click .fa-tachometer': ()=>{
     adminLoc.set('dash');
+    setAdminActive(0)
   },
   'click .new': ()=>{
     adminLoc.set('post');
+    setAdminActive(1)
   },
   'click .fa-image': ()=>{
     adminLoc.set('media');
   },
   'click .fa-file': ()=>{
     adminLoc.set('apps');
+    setAdminActive(2)
   },
   'click .fa-cog': ()=>{
     adminLoc.set('settings');
+    setAdminActive(3)
   },
   'click .fa-trophy': ()=>{
     adminLoc.set('raids');
+    setAdminActive(4)
   },
   'click .fa-twitch': ()=>{
     adminLoc.set('twitch');
+    setAdminActive(5)
   }
 })
 
