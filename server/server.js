@@ -2,40 +2,6 @@ Meteor.startup(function () {
   fs = Npm.require('fs');
 })
 
-//Meteor SEO SSR
-const SeoRouter = Picker.filter((request, response) => {
-  let botAgents = [
-    /^facebookexternalhit/i, // Facebook
-    /^linkedinbot/i, // LinkedIn
-    /^twitterbot/i, // Twitter
-    /^slackbot-linkexpanding/i, // Slack
-    /^googlebot/i
-  ]
-
-  return /_escaped_fragment_/.test(request.url) || botAgents.some(i => i.test(request.headers['user-agent']))
-})
-
-SeoRouter.route('/', (params, request, response) => {
-  SSR.compileTemplate('index', Assets.getText('index.html'))
-  Template.index.helpers({
-    getDocType: function() {
-      return "<!DOCTYPE html>";
-    },
-    title: function(){
-      return siteDetails.findOne({_id: "title"}).title
-    },
-    meta: function(){
-      return siteDetails.findOne({_id: "about"}).about
-    }
-  });
-
-  let html = SSR.render('index')
-
-  response.setHeader('Content-Type', 'text/html;charset=utf-8');
-  response.end(html)
-})
-
-//END
 
 //checks to see if default site values are set, creates template for later
 var needed = ['title', 'about', 'tabard', 'background', 'favicon', 'recruiting']
@@ -182,13 +148,13 @@ Meteor.methods({
         var base64Data = imageDataUrl.replace(dataUrlRegExp, "");
         // declare a binary buffer to hold decoded base64 data
         var imageBuffer = new Buffer(base64Data, "base64");
-        fs.writeFile(path+images[i]+'.jpeg', imageBuffer,
+        fs.writeFile(path+images[i]+'.png', imageBuffer,
         function (err) {
           if (err) throw err;
           console.log('Done!');
           canReload[i] = 1
         })
-        siteDetails.update({_id:images[i]}, {$set:{path: '/files/' + images[i]+".jpeg"}})
+        siteDetails.update({_id:images[i]}, {$set:{path: '/files/' + images[i]+".png"}})
       }
 
       var reloadLength = canReload.length
@@ -315,3 +281,65 @@ Meteor.methods({
     }
   }
 })
+
+// Makes you SEO friendly baby
+WebApp.rawConnectHandlers.use(
+  Meteor.bindEnvironment(function (req, res, next) {
+    var title = siteDetails.findOne({_id: 'title'}).title
+    var about = siteDetails.findOne({_id:'about'}).about
+    var tabard = siteDetails.findOne({_id: 'tabard'}).path
+    if(title == undefined || title == null || title == ''){
+      req.dynamicHead = (req.dynamicHead || "") + '<title>OpenGuild-CMS | FinchMFG</title>';
+    }else{
+      req.dynamicHead = (req.dynamicHead || "") + '<title>'+title+'</title>';
+    }
+
+    if(about == undefined || about == null || about == ''){
+      req.dynamicHead = (req.dynamicHead || "") + '<meta name="description" content="Awesome open source Wow Raid software by FinchMFG" />';
+    }else{
+      req.dynamicHead = (req.dynamicHead || "") +  '<meta name="description" content="'+about+'"/>';
+    }
+
+    if(tabard == undefined || tabard == null || tabard == ''){
+      req.dynamicHead = (req.dynamicHead || "") + '<meta name="tabard" content="blessed" />';
+    }else{
+      req.dynamicHead = (req.dynamicHead || "") + '<meta name="tabard" content="'+tabard+'" />';
+    }
+    next();
+  })
+);
+
+//Meteor SEO SSR for BOTS mang
+const SeoRouter = Picker.filter((request, response) => {
+  let botAgents = [
+    /^facebookexternalhit/i, // Facebook
+    /^linkedinbot/i, // LinkedIn
+    /^twitterbot/i, // Twitter
+    /^slackbot-linkexpanding/i, // Slack
+    /^googlebot/i
+  ]
+
+  return /_escaped_fragment_/.test(request.url) || botAgents.some(i => i.test(request.headers['user-agent']))
+})
+
+SeoRouter.route('/', (params, request, response) => {
+  SSR.compileTemplate('index', Assets.getText('index.html'))
+  Template.index.helpers({
+    getDocType: function() {
+      return "<!DOCTYPE html>";
+    },
+    title: function(){
+      return siteDetails.findOne({_id: "title"}).title
+    },
+    meta: function(){
+      return siteDetails.findOne({_id: "about"}).about
+    }
+  });
+
+  let html = SSR.render('index')
+
+  response.setHeader('Content-Type', 'text/html;charset=utf-8');
+  response.end(html)
+})
+
+//END

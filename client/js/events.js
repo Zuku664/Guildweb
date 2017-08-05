@@ -89,7 +89,7 @@ Template.applyPage.events({
   }
 })
 
-function addImageUp(target, target2, target3){
+function addImageUp(target, target2, target3, type){
   //get image, resizes image in canvas then converts to base64 and sends to the server
   // the server then inserts it into the public directory with an id of the post._id
   // and serves it to the client on request
@@ -121,7 +121,11 @@ function addImageUp(target, target2, target3){
 
       ctx.drawImage(oc, 0, 0, oc.width, oc.height,0, 0, canvas.width, canvas.height);
 
-      var jpegUrl = canvas.toDataURL("image/jpeg");
+      if(type != 'tabard'){
+        var jpegUrl = canvas.toDataURL("image/jpeg");
+      }else{
+        var jpegUrl = canvas.toDataURL("image/png");
+      }
       $(target2).val(jpegUrl)
     }
   }
@@ -171,7 +175,7 @@ Template.editPost.events({
 
 Template.settings.events({
   'click #tabardIn':()=>{
-    addImageUp('tabardCan', '#tabardUp', 'tabardIn')
+    addImageUp('tabardCan', '#tabardUp', 'tabardIn', 'tabard')
   },
   'click #backgroundIn':()=>{
     addImageUp('backgroundCan', '#backgroundUp', 'backgroundIn')

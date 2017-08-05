@@ -7,7 +7,14 @@
       ABOUT
     </div>
     <div class="logo">
-      <img src="/tabard.png" title="Blessed Ignorance"/>
+      <script>
+      //this is faster than waiting on a DB connect
+        if($('meta[name=tabard]').attr("content") != 'blessed'){
+          $('#daLogo').attr('src', $('meta[name=tabard]').attr("content"))
+          $('#daLogo').attr('title', document.title)
+        }
+      </script>
+      <img src="/tabard.png" title="Blessed Ignorance" id="daLogo"/>
     </div>
     <div class="button" id="streams">
       STREAMS

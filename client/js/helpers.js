@@ -139,6 +139,13 @@ Template.index.helpers({
   }
 })
 
+Template.nav.helpers({
+  tabard: ()=>{
+    console.log(siteDetails.findOne({_id: 'tabard'}))
+    return siteDetails.findOne({_id: 'tabard'})
+  }
+})
+
 Template.applyPage.helpers({
   question: ()=>{
     return questions.find({})
