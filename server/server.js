@@ -1,7 +1,19 @@
 Meteor.startup(function () {
   fs = Npm.require('fs');
-})
 
+  // converts old app dates to new format
+  var testingsometing = apps.find({}).fetch()
+  for(var i = 0; i < testingsometing.length; i++){
+    if(!testingsometing[i].date_created){
+      var id = testingsometing[i]._id
+      var date = testingsometing[i].date
+      var date_created = date
+      var res = date.toString().split(" ");
+      date = res[1] + " " + res[2] + " " + res[3]
+      apps.update({_id: id}, {$set: {date: date, date_created:date_created}})
+    }
+  }
+})
 
 //checks to see if default site values are set, creates template for later
 var needed = ['title', 'about', 'tabard', 'background', 'favicon', 'recruiting']
@@ -253,8 +265,16 @@ Meteor.methods({
 
 Meteor.methods({
   'sendApp': (questions, resps, amt) =>{
-    apps.insert({username: resps[0].replace("::", ""), questions: questions, resps:resps, amt:amt, date: new Date()})
+    var isoDate = new Date()
+    var res = isoDate.toString().split(" ");
+    var date = res[1] + " " + res[2] + " " + res[3]
+    apps.insert({username: resps[0].replace("::", ""), questions: questions, resps:resps, amt:amt, date: date, date_created: new Date(), cataSux: 'Unviewed'})
     counts.update({_id:"data"}, {$inc:{appCount: 1}})
+    return 'success'
+  },
+  'updateApp': (id, cata) =>{
+    apps.update({_id: id}, {$set: {cataSux: cata}})
+    return "done"
   }
 })
 

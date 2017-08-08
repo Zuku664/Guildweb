@@ -29,7 +29,7 @@ Meteor.publish("counts", function(){
 });
 
 Meteor.publish("apps", function(){
-  return apps.find({}, {sort:{date: -1}});
+  return apps.find({}, {sort:{date_created: -1}});
 });
 
 

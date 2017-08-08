@@ -7,7 +7,7 @@
     </div>
     {{#each raid}}
     <div class="postObj">
-      <div class="title">
+      <div class="title" onclick="adminLoc.set('editRaid'); currentRaid.set('{{_id}}')">
         {{title}}
       </div>
       <div class="diff">

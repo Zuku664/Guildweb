@@ -6,7 +6,7 @@
     </div>
     {{#each post}}
     <div class="postObj">
-      <div class="title">
+      <div class="title" onclick="currentPost.set('{{_id}}'); adminLoc.set('editPost')">
         {{title}}
       </div>
       <div class="cataSux">
@@ -28,8 +28,8 @@
   <div class="postCon" style="border-top:5px solid #243136; padding-top:10px; padding-bottom:10px;">
     <span class="label">Title</span>
     <input class="postTitle" placeholder="title" id="title"/>
-    {{>markdownBar}}
     <span class="label">Content</span>
+    {{>markdownBar}}
     <textarea class="content" placeholder="Content"></textarea>
     <div class="label">Upload Image</div>
     <input type="file" accept="image/*" class="upload" id="input">

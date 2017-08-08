@@ -33,3 +33,16 @@
   {{/if}}
 </div>
 </template>
+<template name="appSuccess">
+  <div class="appSuccCon">
+    <div class="hero">
+      You're application was successful!
+    </div>
+    <div class="subHero">
+      You should be redirected to the home page in a few seconds!
+    </div>
+  </div>
+  <script>
+  setTimeout(function(){ currentPage.set('feed'); Meteor.pushState.pushState('feed'); Meteor.setActive.setActive(0) }, 4000);
+  </script>
+</template>

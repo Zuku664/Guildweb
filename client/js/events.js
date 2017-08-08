@@ -5,7 +5,11 @@ function setActive(target){
   }
   $(bttns[target]).addClass('activeBttn')
 }
-
+Meteor.setActive ={
+  setActive: (target)=>{
+    setActive(target)
+  }
+}
 Template.nav.events({
   //on click Home in Nav
   'click #home': () => {
@@ -84,8 +88,22 @@ Template.applyPage.events({
       questions.push(ques[i]+"::")
       resps.push($('#qu'+i).val()+"::")
     }
-    Meteor.call("sendApp", questions, resps, amt)
-    location.reload();
+    Meteor.call("sendApp", questions, resps, amt, function(err, res){
+      if(!err){
+        currentPage.set('appSent')
+      }
+    })
+  }
+})
+Template.viewApp.events({
+  'click button': ()=>{
+    var id = currentApp.get()
+    var cata = $('#appCata').find(":selected").text();
+    Meteor.call('updateApp', id, cata, function(err, resp){
+      if(!err){
+        location.reload()
+      }
+    })
   }
 })
 

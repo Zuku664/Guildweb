@@ -2,14 +2,18 @@
 <template name="loadApps">
   <div class="postCon">
     <div class="actionBar">
-      <div class="title">Username</div><div class="diff"></div><div class="act">Actions</div>
+      <div class="title">Username</div><div class="cataSux">Catagory</div><div class="date">Date</div><div class="act">Actions</div>
     </div>
     {{#each app}}
     <div class="postObj">
-      <div class="title">
+      <div class="title" onclick="adminLoc.set('viewApp'); currentApp.set('{{_id}}')">
         {{username}}
       </div>
-      <div class="diff">
+      <div class="cataSux">
+        {{cataSux}}
+      </div>
+      <div class="date">
+        {{date}}
       </div>
       <div class="act">
         <span class="fa fa-trash" onclick="$('.deleteModal').show(); deleting.set('app::{{_id}}')"></span><span class="fa fa-eye" onclick="adminLoc.set('viewApp'); currentApp.set('{{_id}}')"></span>
@@ -40,8 +44,22 @@
       $('.appPrev').append('<div class="label">'+ques[i]+'</div>')
       $('.appPrev').append('<div class="quesName">'+resp[i]+'</div>')
     }
+    if('{{cataSux}}' == 'Unviewed'){
+      Meteor.call('updateApp', currentApp.get(), 'Viewed')
+    }
+    $('#appCata').val('{{cataSux}}');
     </script>
     {{/each}}
+    <div class="label">
+      Catagory
+    </div>
+    <select id="appCata">
+      <option value="Viewed">Viewed</option>
+      <option value="Unviewed">Unviewed</option>
+      <option value="Approved">Approved</option>
+      <option value="Denied">Denied</option>
+    </select>
+    <button id="changeAppCata">Update</button>
   </div>
 </template>
 

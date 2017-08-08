@@ -80,7 +80,7 @@ Template.appSet.helpers({
 
 Template.loadApps.helpers({
   app: ()=>{
-    return apps.find({}, {sort:{date: -1}})
+    return apps.find({}, {sort:{date_created: -1}})
   }
 })
 
