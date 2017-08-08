@@ -80,7 +80,11 @@ Template.appSet.helpers({
 
 Template.loadApps.helpers({
   app: ()=>{
-    return apps.find({}, {sort:{date_created: -1}})
+    if(appSort.get() == '' || appSort.get() == 'All'){
+      return apps.find({}, {sort:{date_created: -1}})
+    }else{
+      return apps.find({cataSux: appSort.get()}, {sort:{date_created: -1}})
+    }
   }
 })
 

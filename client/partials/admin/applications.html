@@ -2,7 +2,20 @@
 <template name="loadApps">
   <div class="postCon">
     <div class="actionBar">
-      <div class="title">Username</div><div class="cataSux">Catagory</div><div class="date">Date</div><div class="act">Actions</div>
+      <div class="title">Username</div><div class="cataSux">
+        <select name="Catagory" id="appSorter" style="margin:0">
+          <option value="All">All</option>
+          <option value="Unviewed">Unviewed</option>
+          <option value="Viewed">Viewed</option>
+          <option value="Approved">Approved</option>
+          <option value="Denied">Denied</option>
+        </select>
+        <script>
+        $('#appSorter').change(function(){
+          appSort.set($(this).val())
+        });
+        </script>
+      </div><div class="date">Date</div><div class="act">Actions</div>
     </div>
     {{#each app}}
     <div class="postObj">
