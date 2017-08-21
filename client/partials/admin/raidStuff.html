@@ -58,12 +58,15 @@
     <button onclick="Meteor.editBoss.addBoss(count)" style="margin-top:0; display:inline">Add New Boss</button>
     <button onclick="Meteor.editBoss.remBoss(count)" class="remBoss" style="margin-top:0; float:right">Remove Boss</button>
     <button id="editRaid" onclick="Meteor.editBoss.postBoss('{{_id}}', count)">Update</button>
+
+    <hidden id="hiddenBN" style="display:none">{{bossName}}</hidden>
+    <hidden id="hiddenTitle" style="display:none">{{title}}</hidden>
+
     <script>
     //get the data and parse it
-     var title = "{{title}}"
+     var title = $('#hiddenTitle').html().split('::,')
 
-     var bossName = "{{bossName}}"
-     bossName = bossName.split("::,")
+     var bossName = $('#hiddenBN').html().split('::,')
      var bossStatN = "{{bossStatN}}"
      bossStatN = bossStatN.split(",")
      var bossStatH = "{{bossStatH}}"

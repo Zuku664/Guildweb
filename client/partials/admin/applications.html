@@ -42,14 +42,22 @@
     <div class="appPrev">
 
     </div>
+
+    <script>
+    $(".appQues").each(function() {
+      var text = $(this).text();
+      text = text.replace("::", "");
+      $(this).text(text);
+    });
+    </script>
+    <hidden id="hiddenResp" style="display:none">{{resps}}</hidden>
+    <hidden id="hiddenQues" style="display:none">{{questions}}</hidden>
     <script>
     var amt = {{amt}}
 
-    var ques = "{{questions}}"
-    ques = ques.split('::,')
+    var ques = $('#hiddenQues').html().split('::,')
 
-    var resp = '{{resps}}'
-    resp = resp.split('::,')
+    var resp = $('#hiddenResp').html().split('::,')
 
     for(var i = 0; i < amt -1; i++){
       ques[i] = ques[i].replace("::", "")

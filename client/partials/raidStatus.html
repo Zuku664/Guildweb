@@ -37,6 +37,7 @@
         </table>
       </div>
     </div>
+    <hidden id="hiddenBNClient" style="display:none">{{bossName}}</hidden>
     <script>
     //this really should be devoted to one function globally, but since it's small and I'm pressed for time
     //its going to live here instead.
@@ -46,8 +47,7 @@
         top:   e.clientY
       });
     });
-    var bossName = "{{bossName}}"
-    bossName = bossName.split('::,')
+    var bossName = $('#hiddenBNClient').html().split('::,')
     var bossStatN = "{{bossStatN}}"
     bossStatN = bossStatN.split(',')
     var bossStatH = "{{bossStatH}}"
@@ -63,7 +63,9 @@
 
     for(var i = 0; i < amt; i++){
       $( "#{{_id}}" ).append('<tr>')
-      bossName[i] = bossName[i].replace("::", "")
+      try{
+        bossName[i] = bossName[i].replace("::", "")
+      }catch(e){}
       $( "#{{_id}}" ).append('<td class="bn">'+bossName[i]+'</td>')
 
       if(bossStatN[i].includes('DEAD')){
