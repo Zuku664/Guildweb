@@ -37,7 +37,7 @@
         </table>
       </div>
     </div>
-    <hidden id="hiddenBNClient" style="display:none">{{bossName}}</hidden>
+    <hidden id="{{_id}}hiddenBNClient" style="display:none">{{bossName}}</hidden>
     <script>
     //this really should be devoted to one function globally, but since it's small and I'm pressed for time
     //its going to live here instead.
@@ -47,7 +47,7 @@
         top:   e.clientY
       });
     });
-    var bossName = $('#hiddenBNClient').html().split('::,')
+    var bossName = $('#{{_id}}hiddenBNClient').html().split('::,')
     var bossStatN = "{{bossStatN}}"
     bossStatN = bossStatN.split(',')
     var bossStatH = "{{bossStatH}}"
