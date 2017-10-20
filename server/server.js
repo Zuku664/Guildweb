@@ -136,7 +136,7 @@ Meteor.methods({
 });
 
 Meteor.methods({
-  'updateSite': (specStatus, title, about, tabard, background) =>{
+  'updateSite': (specStatus, title, about, tabard, background, favicon) =>{
     if(Meteor.user()){
       var spec = ['dnB','dnU','dnF','dhH','dhV','drB','drF','drR','drG','huM','huS','huB','maF','maFr','maA','moM','moW','moB','paH','paR','paP','prS','prD','prH','roA','roS','roC','shE','shR','shEn','waA','waD','waDe','warA','warF','warP']
       var images = []
@@ -147,6 +147,10 @@ Meteor.methods({
       }
       if(background != ''){
         images.push('background')
+        canReload.push('0')
+      }
+      if(favicon != ''){
+        images.push('favicon')
         canReload.push('0')
       }
       var path = process.env["PWD"] + '/.static~/';
@@ -160,13 +164,22 @@ Meteor.methods({
         var base64Data = imageDataUrl.replace(dataUrlRegExp, "");
         // declare a binary buffer to hold decoded base64 data
         var imageBuffer = new Buffer(base64Data, "base64");
-        fs.writeFile(path+images[i]+'.png', imageBuffer,
+
+        var ext;
+
+        if(images[i] != 'favicon'){
+          ext = '.png'
+        }else{
+          ext = '.ico'
+        }
+
+        fs.writeFile(path+images[i]+ext, imageBuffer,
         function (err) {
           if (err) throw err;
           console.log('Done!');
           canReload[i] = 1
         })
-        siteDetails.update({_id:images[i]}, {$set:{path: '/files/' + images[i]+".png"}})
+        siteDetails.update({_id:images[i]}, {$set:{path: '/files/' + images[i]+ext}})
       }
 
       var reloadLength = canReload.length
@@ -358,7 +371,7 @@ SeoRouter.route('/', (params, request, response) => {
       try{
         return siteDetails.findOne({_id: "tabard"}).path
       }catch(e){
-        return 
+        return
       }
     }
   });
