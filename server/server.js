@@ -353,6 +353,13 @@ SeoRouter.route('/', (params, request, response) => {
     },
     meta: function(){
       return siteDetails.findOne({_id: "about"}).about
+    },
+    tabard: function(){
+      try{
+        return siteDetails.findOne({_id: "tabard"}).path
+      }catch(e){
+        return 
+      }
     }
   });
 
