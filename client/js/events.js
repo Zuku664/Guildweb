@@ -52,30 +52,51 @@ Meteor.adminAct = ({
 Template.admin.events({
   'click .fa-tachometer': ()=>{
     adminLoc.set('dash');
+    history.pushState('', document.title, "/admin");
     setAdminActive(0)
   },
   'click .new': ()=>{
     adminLoc.set('post');
+    history.pushState('', document.title, "/admin/post");
     setAdminActive(1)
-  },
-  'click .fa-image': ()=>{
-    adminLoc.set('media');
   },
   'click .fa-file': ()=>{
     adminLoc.set('apps');
+    history.pushState('', document.title, "/admin/apps");
     setAdminActive(2)
   },
   'click .fa-cog': ()=>{
     adminLoc.set('settings');
+    history.pushState('', document.title, "/admin/settings");
     setAdminActive(3)
   },
   'click .fa-trophy': ()=>{
     adminLoc.set('raids');
+    history.pushState('', document.title, "/admin/raids");
     setAdminActive(4)
   },
   'click .fa-twitch': ()=>{
     adminLoc.set('twitch');
+    history.pushState('', document.title, "/admin/twitch");
     setAdminActive(5)
+  }
+})
+
+Template.adminHeader.events({
+  'click .page': ()=>{
+    if(currentPage.get() != 'admin'){
+      currentPage.set('admin')
+      if(Meteor.userId()){
+        BlazeLayout.render('admin');
+        history.pushState('', document.title, "admin");
+      }else{
+        BlazeLayout.render('signin');
+      }
+    }else{
+      currentPage.set('feed')
+      history.pushState('', document.title, "/");
+      BlazeLayout.render('index');
+    }
   }
 })
 
@@ -198,6 +219,9 @@ Template.settings.events({
   'click #backgroundIn':()=>{
     addImageUp('backgroundCan', '#backgroundUp', 'backgroundIn')
   },
+  'click #faviIn':()=>{
+    addImageUp('faviCan', '#faviUp', 'faviIn')
+  },
   'click #saveSettings':()=>{
     var specLength = 36;
     var spec = ['dnB','dnU','dnF','dhH','dhV','drB','drF','drR','drG','huM','huS','huB','maF','maFr','maA','moM','moW','moB','paH','paR','paP','prS','prD','prH','roA','roS','roC','shE','shR','shEn','waA','waD','waDe','warA','warF','warP']
@@ -211,6 +235,7 @@ Template.settings.events({
     var about = $('.content').val()
     var tabard = ''
     var background = ''
+    var favi = ''
 
     if($('#tabardUp').val() != ''){
       tabard = $('#tabardUp').val()
@@ -218,8 +243,11 @@ Template.settings.events({
     if($('#backgroundUp').val() != ''){
       background = $('#backgroundUp').val()
     }
+    if($('#faviUp').val() != ''){
+      favi = $('#faviUp').val()
+    }
 
-    Meteor.call('updateSite', specStatus, title, about, tabard, background, function(err, res){
+    Meteor.call('updateSite', specStatus, title, about, tabard, background, favi, function(err, res){
       if(!err){
         location.reload();
       }
