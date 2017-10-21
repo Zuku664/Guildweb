@@ -61,6 +61,7 @@ body, html{
 body{
   background-repeat: no-repeat !important;
   background-position: center top !important;
+  background-size:cover !important;
   background:url('backgrounds/background1.jpg');
   background-attachment: fixed!important;
 }
@@ -211,7 +212,7 @@ a{
     overflow: hidden;
   }
   .feed{
-    margin-bottom:10;
+    margin-bottom:10px;
     margin-top:60px;
   }
   .apply{
@@ -1067,6 +1068,7 @@ a{
     width: 1040px;
     margin-left:auto;
     margin-right:auto;
+    clear:both;
   }
   .nav{
     .button, .logo{
