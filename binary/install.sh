@@ -1,6 +1,6 @@
 #!/bin/bash  
 APPNAME='openguild'
-APPURL='http://yoururl.com'
+APPURL='yoururl.com'
 #this is case sensitive
 APPTAR='openGuild-CMS.tar.gz'
 
@@ -49,7 +49,7 @@ export BIND_IP=127.0.0.1
 export PORT=8080  
 export HTTP_FORWARDED_COUNT=1  
 export MONGO_URL=mongodb://localhost:27017/$APPNAME  
-export ROOT_URL=$APPURL 
+export ROOT_URL=http://$APPURL 
 export ASSET_PATH=/home/$APPNAME/public/ 
 
 if [ ! -d ~/.nvm ]; then 
