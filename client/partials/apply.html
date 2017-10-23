@@ -9,19 +9,13 @@
     <script>
     var ques = "{{ques}}"
     ques = ques.split('::,')
-
-    var amt = Number('{{quesCount}}')
-    amt += 1
-    for(var i = 0; i < amt; i++){
+      
+    for(var i = 0; i < ques.length; i++){
       ques[i] = ques[i].replace("::", "")
       $('.quesCon').append('<div class="quesTitle">'+ques[i]+'</div>')
       $('.quesCon').append('<input class="quesResp" placeholder="Response" id="qu'+i+'">')
     }
-
-    var first = $('<input class="quesResp" placeholder="Response" id="qu'+0+'">').val()
-    if(amt == 1 && first.length >= 1 ){
-      //do nothing
-    }else{
+    if(ques.length == 1 && ques[0] == ""){
       $('#qu0').hide()
       $('#buttenrino').hide()
       $('.quesCon').append('<div class="quesTitle">Looks like we are not accepting applications right now! Check back later!</div>')
